@@ -55,7 +55,7 @@
                         </div>
                     </div>
                     <div class="col-lg-2">
-                        <button type="submit" class="btn btn-primary">Book Now</button>
+                        <button type="submit" class="btn btn-primary">Search Now</button>
                     </div>
                 </div>
             </div>
