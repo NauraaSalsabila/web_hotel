@@ -56,11 +56,6 @@
                                         </button>
                                     </div>
                                     <div class="form-group">
-                                        <div>
-                                            <a href="{{ route('admin_forget_password') }}">
-                                                Forget Password?
-                                            </a>
-                                        </div>
                                     </div>
                                 </form>
                             </div>

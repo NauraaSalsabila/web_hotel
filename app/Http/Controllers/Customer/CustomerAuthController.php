@@ -99,37 +99,7 @@ class CustomerAuthController extends Controller
         return redirect()->route('customer_login');
     }
 
-    public function forget_password()
-    {
-        return view('front.forget_password');
-    }
-
-    public function forget_password_submit(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email'
-        ]);
-
-        $customer_data = Customer::where('email',$request->email)->first();
-        if(!$customer_data) {
-            return redirect()->back()->with('error','Email address not found!');
-        }
-
-        $token = hash('sha256',time());
-
-        $customer_data->token = $token;
-        $customer_data->update();
-
-        $reset_link = url('reset-password/'.$token.'/'.$request->email);
-        $subject = 'Reset Password';
-        $message = 'Please click on the following link to reset the password: <br>';
-        $message .= '<a href="'.$reset_link.'">Click here</a>';
-
-        \Mail::to($request->email)->send(new Websitemail($subject,$message));
-
-        return redirect()->route('customer_login')->with('success','Please check your email and follow the steps there');
-
-    }
+    
 
 
     public function reset_password($token,$email)

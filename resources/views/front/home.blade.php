@@ -69,21 +69,50 @@
 <div class="home-feature">
     <div class="container">
         <div class="row">
-            
-            @foreach($feature_all as $item)
             <div class="col-md-3">
                 <div class="inner">
-                    <div class="icon"><i class="{{ $item->icon }}"></i></div>
+                    <div class="icon"><i class="fa-solid fa-swimming-pool"></i></div>
                     <div class="text">
-                        <h2>{{ $item->heading }}</h2>
+                        <h2>Swimming Pool</h2>
                         <p>
-                            {!! $item->text !!}
+                            Enjoy a luxurious and relaxing swim in our well-maintained pool area.
                         </p>
                     </div>
                 </div>
             </div>
-            @endforeach
-
+            <div class="col-md-3">
+                <div class="inner">
+                    <div class="icon"><i class="fa-solid fa-spa"></i></div>
+                    <div class="text">
+                        <h2>Spa & Wellness</h2>
+                        <p>
+                            Experience ultimate relaxation with our world-class spa services.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="inner">
+                    <div class="icon"><i class="fa-solid fa-utensils"></i></div>
+                    <div class="text">
+                        <h2>Gourmet Dining</h2>
+                        <p>
+                            Indulge in exquisite cuisines prepared by top chefs at our restaurant.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="inner">
+                    <div class="icon"><i class="fa-solid fa-wifi"></i></div>
+                    <div class="text">
+                        <h2>Free Wi-Fi</h2>
+                        <p>
+                            Stay connected with high-speed internet available throughout the property.
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -146,27 +175,54 @@
         <div class="row">
             <div class="col-12">
                 <div class="testimonial-carousel owl-carousel">
-                    @foreach($testimonial_all as $item)
                     <div class="item">
                         <div class="photo">
-                            <img src="{{ asset('uploads/'.$item->photo) }}" alt="">
+                            <img src="{{ asset('uploads/client1.png') }}" alt="Client 1">
                         </div>
                         <div class="text">
-                            <h4>{{ $item->name }}</h4>
-                            <p>{{ $item->designation }}</p>
+                            <h4>Jessen Ramadeksa Allen</h4>
+                            <p>Entrepreneur</p>
                         </div>
                         <div class="description">
                             <p>
-                                {!! $item->comment !!}
+                                "This service exceeded my expectations. The team was professional and the process seamless."
                             </p>
                         </div>
                     </div>
-                    @endforeach
+                    <div class="item">
+                        <div class="photo">
+                            <img src="{{ asset('uploads/client2.jpg') }}" alt="Client 2">
+                        </div>
+                        <div class="text">
+                            <h4>Naura Salsabila</h4>
+                            <p>Travel Blogger</p>
+                        </div>
+                        <div class="description">
+                            <p>
+                                "The experience was outstanding. Highly recommended for those seeking quality and reliability."
+                            </p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="photo">
+                            <img src="{{ asset('uploads/client3.jpg') }}" alt="Client 3">
+                        </div>
+                        <div class="text">
+                            <h4>Dian Prinatama Silaban</h4>
+                            <p>Software Engineer</p>
+                        </div>
+                        <div class="description">
+                            <p>
+                                "I’m very impressed with the attention to detail and the excellent customer service provided."
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 @endif
 
 
@@ -179,35 +235,42 @@
             </div>
         </div>
         <div class="row">
-
             @foreach($post_all as $item)
-            @if($loop->iteration>$global_setting_data->home_latest_post_total) 
+            @if($loop->iteration > $global_setting_data->home_latest_post_total) 
             @break
             @endif
             <div class="col-md-4">
                 <div class="inner">
                     <div class="photo">
-                        <img src="{{ asset('uploads/'.$item->photo) }}" alt="">
+                        <!-- Display one of the 3 images for each post (5.jpg, 6.jpg, or 7.jpg) -->
+                        @if($loop->iteration == 1)
+                            <img src="{{ asset('uploads/2.jpg') }}" alt="Image 5">
+                        @elseif($loop->iteration == 2)
+                            <img src="{{ asset('uploads/6.jpg') }}" alt="Image 6">
+                        @elseif($loop->iteration == 3)
+                            <img src="{{ asset('uploads/7.jpg') }}" alt="Image 7">
+                        @else
+                            <img src="{{ asset('uploads/'.$item['photo']) }}" alt="{{ $item['heading'] }}">
+                        @endif
                     </div>
                     <div class="text">
-                        <h2><a href="{{ route('post',$item->id) }}">{{ $item->heading }}</a></h2>
+                        <h2><a href="{{ route('post', $item['id']) }}">{{ $item['heading'] }}</a></h2>
                         <div class="short-des">
-                            <p>
-                                {!! $item->short_content !!}
-                            </p>
+                            <p>{!! $item['short_content'] !!}</p>
                         </div>
                         <div class="button">
-                            <a href="{{ route('post',$item->id) }}" class="btn btn-primary">Read More</a>
+                            <a href="{{ route('post', $item['id']) }}" class="btn btn-primary">Read More</a>
                         </div>
                     </div>
                 </div>
             </div>
             @endforeach
-            
         </div>
     </div>
 </div>
 @endif
+
+
 
 
 
