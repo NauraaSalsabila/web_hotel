@@ -40,10 +40,11 @@
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="form-group">
-                            <input type="text" name="checkin_checkout" class="form-control daterange1" placeholder="Checkin & Checkout">
-                        </div>
+                    <div class="form-group position-relative">
+                        <input type="text" name="checkin_checkout" class="form-control daterange1" placeholder="Checkin & Checkout">
+                        <i class="fas fa-calendar-alt position-absolute" style="top: 12px; right: 10px; font-size: 18px;"></i>
                     </div>
+                </div>
                     <div class="col-lg-2">
                         <div class="form-group">
                             <input type="number" name="adult" class="form-control" min="1" max="30" placeholder="Adults">
