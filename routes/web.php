@@ -9,7 +9,6 @@ use App\Http\Controllers\Front\RoomController;
 use App\Http\Controllers\Front\BookingController;
 
 use App\Http\Controllers\Admin\AdminHomeController;
-use App\Http\Controllers\Admin\AdminSettingController;
 use App\Http\Controllers\Admin\AdminCustomerController;
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\AdminProfileController;
@@ -96,8 +95,6 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/home', [AdminHomeController::class, 'index'])->name('admin_home');
 
 
-    Route::get('/admin/setting', [AdminSettingController::class, 'index'])->name('admin_setting');
-    Route::post('/admin/setting/update', [AdminSettingController::class, 'update'])->name('admin_setting_update');
 
     Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin_logout');
     Route::get('/admin/datewise-rooms', [AdminDatewiseRoomController::class, 'index'])->name('admin_datewise_rooms');
@@ -109,48 +106,6 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/slide/view', function () {
         return view('admin.slide_view');
     })->name('admin_slide_view');
-    
-
-
-    Route::get('/admin/post/view', [AdminPostController::class, 'index'])->name('admin_post_view');
-
-
-
-
-
-
-
-
-
-
-
-    Route::get('/admin/page/contact', [AdminPageController::class, 'contact'])->name('admin_page_contact');
-    Route::post('/admin/page/contact/update', [AdminPageController::class, 'contact_update'])->name('admin_page_contact_update');
-
-
-
-
-    Route::get('/admin/page/room', [AdminPageController::class, 'room'])->name('admin_page_room');
-    Route::post('/admin/page/room/update', [AdminPageController::class, 'room_update'])->name('admin_page_room_update');
-
-    Route::get('/admin/page/cart', [AdminPageController::class, 'cart'])->name('admin_page_cart');
-    Route::post('/admin/page/cart/update', [AdminPageController::class, 'cart_update'])->name('admin_page_cart_update');
-
-    Route::get('/admin/page/checkout', [AdminPageController::class, 'checkout'])->name('admin_page_checkout');
-    Route::post('/admin/page/checkout/update', [AdminPageController::class, 'checkout_update'])->name('admin_page_checkout_update');
-
-
-    Route::get('/admin/page/signup', [AdminPageController::class, 'signup'])->name('admin_page_signup');
-    Route::post('/admin/page/signup/update', [AdminPageController::class, 'signup_update'])->name('admin_page_signup_update');
-
-    Route::get('/admin/page/signin', [AdminPageController::class, 'signin'])->name('admin_page_signin');
-    Route::post('/admin/page/signin/update', [AdminPageController::class, 'signin_update'])->name('admin_page_signin_update');
-
-
-    Route::get('/admin/page/reset_password', [AdminPageController::class, 'reset_password'])->name('admin_page_reset_password');
-    Route::post('/admin/page/reset_password/update', [AdminPageController::class, 'reset_password_update'])->name('admin_page_reset_password_update');
-
-
 
 
     Route::get('/admin/amenity/view', [AdminAmenityController::class, 'index'])->name('admin_amenity_view');
