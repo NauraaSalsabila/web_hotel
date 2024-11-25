@@ -113,11 +113,6 @@ Route::middleware(['auth:admin'])->group(function () {
 
 
     Route::get('/admin/post/view', [AdminPostController::class, 'index'])->name('admin_post_view');
-    Route::get('/admin/post/add', [AdminPostController::class, 'add'])->name('admin_post_add');
-    Route::post('/admin/post/store', [AdminPostController::class, 'store'])->name('admin_post_store');
-    Route::get('/admin/post/edit/{id}', [AdminPostController::class, 'edit'])->name('admin_post_edit');
-    Route::post('/admin/post/update/{id}', [AdminPostController::class, 'update'])->name('admin_post_update');
-    Route::get('/admin/post/delete/{id}', [AdminPostController::class, 'delete'])->name('admin_post_delete');
 
 
 
@@ -134,9 +129,6 @@ Route::middleware(['auth:admin'])->group(function () {
 
 
 
-
-    Route::get('/admin/page/blog', [AdminPageController::class, 'blog'])->name('admin_page_blog');
-    Route::post('/admin/page/blog/update', [AdminPageController::class, 'blog_update'])->name('admin_page_blog_update');
 
     Route::get('/admin/page/room', [AdminPageController::class, 'room'])->name('admin_page_room');
     Route::post('/admin/page/room/update', [AdminPageController::class, 'room_update'])->name('admin_page_room_update');

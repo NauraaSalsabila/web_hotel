@@ -42,7 +42,7 @@
             </div>
             <div class="col-lg-6 col-md-12">
                 <div class="map">
-                    {!! $page_data->contact_map !!}
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31815.59842069819!2d105.24252278169007!3d-5.363176199999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e40dbd354dfeb7f%3A0x5fcf43cfe2d0150c!2sIlmu%20Komputer%2C%20Universitas%20Lampung!5e0!3m2!1sen!2sid!4v1656378870953!5m2!1sen!2sid\ width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>
