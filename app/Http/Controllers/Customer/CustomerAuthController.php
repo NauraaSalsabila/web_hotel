@@ -24,23 +24,35 @@ class CustomerAuthController extends Controller
         'password' => 'required'
     ]);
 
-    // Pastikan tidak ada sesi admin yang aktif
     if (Auth::guard('admin')->check()) {
         Auth::guard('admin')->logout();
     }
 
+    // Periksa apakah email terdaftar
+    $customer = Customer::where('email', $request->email)->first();
+
+    if (!$customer) {
+        return redirect()->route('customer_login')->with('error', 'Email or password is incorrect!');
+    }
+
+    // Periksa apakah akun belum diverifikasi
+    if ($customer->status == 0) {
+        return redirect()->route('customer_login')->with('error', 'Your account has not been verified yet. Please wait for admin verification.');
+    }
+
+    // Coba autentikasi dengan kredensial
     $credential = [
         'email' => $request->email,
-        'password' => $request->password,
-        'status' => 1
+        'password' => $request->password
     ];
 
     if (Auth::guard('customer')->attempt($credential)) {
         return redirect()->route('home');
     } else {
-        return redirect()->route('customer_login')->with('error', 'Information is not correct!');
+        return redirect()->route('customer_login')->with('error', 'Email or password is incorrect!');
     }
 }
+
 
 
 
@@ -66,13 +78,13 @@ class CustomerAuthController extends Controller
     $customer->name = $request->name;
     $customer->email = $request->email;
     $customer->password = $password;
-    $customer->status = 1; // Status set to active
+    $customer->status = 0; // Status set to active
     $customer->save();
 
     // Auth::guard('customer')->login($customer);
 
     // Redirect to the login page with a success message
-    return Redirect::route('customer_login')->with('success', 'Registration successful, please log in.');
+    return Redirect::route('customer_login')->with('success', 'Registration successful, Please wait until your account is verified.');
 }
 
 
