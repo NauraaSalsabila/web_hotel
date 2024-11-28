@@ -51,6 +51,8 @@ Route::get('/admin/logout', [AdminLoginController::class, 'logout'])->name('admi
 
 Route::get('/admin/reset-password/{token}/{email}', [AdminLoginController::class, 'reset_password'])->name('admin_reset_password');
 Route::post('/admin/reset-password-submit', [AdminLoginController::class, 'reset_password_submit'])->name('admin_reset_password_submit');
+Route::put('/admin/orders/change-payment-status/{id}', [AdminOrderController::class, 'change_payment_status'])->name('admin.order.change_payment_status');
+Route::get('admin/order/verify-payment/{id}', [AdminOrderController::class, 'change_payment_status'])->name('admin_order_verify_payment');
 
 Route::middleware(['guest:customer'])->group(function () {
     Route::get('/login', [CustomerAuthController::class, 'login'])->name('customer_login');
@@ -72,6 +74,11 @@ Route::middleware(['guest:customer'])->group(function () {
     // Route for resetting the password
     Route::get('/reset-password/{token}/{email}', [CustomerAuthController::class, 'reset_password'])->name('customer_reset_password');
     Route::post('/reset-password-submit', [CustomerAuthController::class, 'reset_password_submit'])->name('customer_reset_password_submit');
+});
+Route::get('/customer/orders', [CustomerOrderController::class, 'index'])->name('customer.orders');
+
+Route::middleware('auth:customer')->group(function () {
+    Route::post('/customer/upload-payment-proof/{orderId}', [CustomerOrderController::class, 'uploadPaymentProof'])->name('customer_upload_payment_proof');
 });
 
 // Route for customer logout

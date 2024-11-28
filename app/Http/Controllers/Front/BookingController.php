@@ -293,7 +293,7 @@ class BookingController extends Controller
                 $obj->checkin_date = $arr_cart_checkin_date[$i];
                 $obj->checkout_date = $arr_cart_checkout_date[$i];
                 $obj->adult = $arr_cart_adult[$i];
-                $obj->children = $arr_cart_children[$i];
+                $obj->children = $arr_cart_children[$i] ?? 0; // Beri nilai default 0 jika NULL
                 $obj->subtotal = $sub;
                 $obj->save();
 

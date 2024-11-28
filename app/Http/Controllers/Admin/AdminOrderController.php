@@ -32,4 +32,16 @@ class AdminOrderController extends Controller
 
         return redirect()->back()->with('success', 'Order is deleted successfully');
     }
+
+    public function change_payment_status($id)
+{
+    $order = Order::findOrFail($id);
+
+    // Ubah status pembayaran
+    $order->payment_status = !$order->payment_status; // Toggle status
+    $order->save();
+
+    return redirect()->back()->with('success', 'Payment status updated successfully.');
+}
+
 }
