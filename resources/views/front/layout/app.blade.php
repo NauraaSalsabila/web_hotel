@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <title>Hotel Website</title>        
 		
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="icon" type="image/png" href="{{ asset('uploads/'.$global_setting_data->favicon) }}">
 
         @include('front.layout.styles')
 
@@ -86,12 +86,16 @@
                 <div class="row">
                     <div class="col-md-6 left-side">
                         <ul>
-                    <!-- Static Phone Number -->
-                    <li class="phone-text">+628 5873 6383</li>
 
-                    <!-- Static Email Address -->
-                    <li class="email-text">roomify.id@gmail.com</li>
-                </ul>
+                            @if($global_setting_data->top_bar_phone != '')
+                            <li class="phone-text">{{ $global_setting_data->top_bar_phone }}</li>
+                            @endif
+                            
+                            @if($global_setting_data->top_bar_email != '')
+                            <li class="email-text">{{ $global_setting_data->top_bar_email }}</li>
+                            @endif
+
+                        </ul>
                     </div>
                     <div class="col-md-6 right-side">
                         <ul class="right">
@@ -118,6 +122,7 @@
                             @else   
 
                             @if(Auth::guard('customer')->check())
+    <li class="menu"><a href="{{ route('customer_home') }}">History</a></li>
     <li class="menu dropdown">
         <a href="#" data-toggle="dropdown" class="dropdown-toggle">
             @if(Auth::guard('customer')->user()->photo == '')
@@ -128,6 +133,9 @@
             <span>{{ Auth::guard('customer')->user()->name }}</span>
         </a>
         <div class="dropdown-menu">
+            <a href="{{ route('customer_profile') }}" class="dropdown-item has-icon">
+                <i class="fa fa-user"></i> Edit Profile
+            </a>
             <a href="{{ route('customer_logout') }}" class="dropdown-item has-icon text-danger">
                 <i class="fa fa-sign-out"></i> Logout
             </a>
@@ -181,7 +189,7 @@
                                 </li>
 
 
-                            
+                                
 
 
                                 @if($global_page_data->blog_status == 1)
@@ -215,8 +223,7 @@
                             <h2 class="heading">Site Links</h2>
                             <ul class="useful-links">
 
-                            <li><a href="{{ route('home') }}">Home</a></li>
-
+                                <li><a href="{{ route('home') }}">Home</a></li>
 
                                 @if($global_page_data->blog_status == 1)
                                 <li><a href="{{ route('blog') }}">{{ $global_page_data->blog_heading }}</a></li>
@@ -279,7 +286,7 @@
                         </div>
                     </div>
 
-                
+
 
                 </div>
             </div>
@@ -313,6 +320,7 @@
             </script>
         @endif
 
+        
         <div id="loader"></div>
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
