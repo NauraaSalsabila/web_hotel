@@ -17,28 +17,7 @@ class HomeController extends Controller
         $slide_all = Slide::get();
         $feature_all = Feature::get();
         $testimonial_all = Testimonial::get();
-        $post_all = [
-            [
-                'id' => 1,
-                'photo' => 'post1.jpg',
-                'heading' => 'Post Title 1',
-                'short_content' => 'This is a short description of the first post.'
-            ],
-            [
-                'id' => 2,
-                'photo' => 'post2.jpg',
-                'heading' => 'Post Title 2',
-                'short_content' => 'This is a short description of the second post.'
-            ],
-            [
-                'id' => 3,
-                'photo' => 'post3.jpg',
-                'heading' => 'Post Title 3',
-                'short_content' => 'This is a short description of the third post.'
-            ],
-            // Add more posts as needed
-        ];
-
+        $post_all = Post::orderBy('id','desc')->limit(3)->get();
         $room_all = Room::get();
 
         return view('front.home', compact('slide_all','feature_all','testimonial_all','post_all','room_all'));

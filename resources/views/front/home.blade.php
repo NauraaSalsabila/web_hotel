@@ -236,36 +236,31 @@
             </div>
         </div>
         <div class="row">
+
             @foreach($post_all as $item)
-            @if($loop->iteration > $global_setting_data->home_latest_post_total) 
+            @if($loop->iteration>$global_setting_data->home_latest_post_total) 
             @break
             @endif
             <div class="col-md-4">
                 <div class="inner">
                     <div class="photo">
-                        <!-- Display one of the 3 images for each post (5.jpg, 6.jpg, or 7.jpg) -->
-                        @if($loop->iteration == 1)
-                            <img src="{{ asset('uploads/2.jpg') }}" alt="Image 5">
-                        @elseif($loop->iteration == 2)
-                            <img src="{{ asset('uploads/6.jpg') }}" alt="Image 6">
-                        @elseif($loop->iteration == 3)
-                            <img src="{{ asset('uploads/7.jpg') }}" alt="Image 7">
-                        @else
-                            <img src="{{ asset('uploads/'.$item['photo']) }}" alt="{{ $item['heading'] }}">
-                        @endif
+                        <img src="{{ asset('uploads/'.$item->photo) }}" alt="">
                     </div>
                     <div class="text">
-                        <h2><a href="{{ route('post', $item['id']) }}">{{ $item['heading'] }}</a></h2>
+                        <h2><a href="{{ route('post',$item->id) }}">{{ $item->heading }}</a></h2>
                         <div class="short-des">
-                            <p>{!! $item['short_content'] !!}</p>
+                            <p>
+                                {!! $item->short_content !!}
+                            </p>
                         </div>
                         <div class="button">
-                            <a href="{{ route('post', $item['id']) }}" class="btn btn-primary">Read More</a>
+                            <a href="{{ route('post',$item->id) }}" class="btn btn-primary">Read More</a>
                         </div>
                     </div>
                 </div>
             </div>
             @endforeach
+            
         </div>
     </div>
 </div>

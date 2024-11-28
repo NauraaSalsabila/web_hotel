@@ -15,43 +15,34 @@
 <div class="blog-item">
     <div class="container">
         <div class="row">
+            @foreach($post_all as $item)
             <div class="col-md-4">
                 <div class="inner">
                     <div class="photo">
-                        <!-- Display images from public/uploads/ -->
-                        <img src="{{ asset('uploads/2.jpg') }}" alt="Image 5">
+                        <img src="{{ asset('uploads/'.$item->photo) }}" alt="">
                     </div>
                     <div class="text">
-                        <h2>Image 5</h2>
-                        <p>astaghfirullah</p>
+                        <h2><a href="{{ route('post',$item->id) }}">{{ $item->heading }}</a></h2>
+                        <div class="short-des">
+                            <p>
+                                {!! $item->short_content !!}
+                            </p>
+                        </div>
+                        <div class="button">
+                            <a href="{{ route('post',$item->id) }}" class="btn btn-primary">Read More</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="inner">
-                    <div class="photo">
-                        <!-- Display images from public/uploads/ -->
-                        <img src="{{ asset('uploads/6.jpg') }}" alt="Image 6">
-                    </div>
-                    <div class="text">
-                        <h2>Image 6</h2>
-                        <p>astaghfirullah</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="inner">
-                    <div class="photo">
-                        <!-- Display images from public/uploads/ -->
-                        <img src="{{ asset('uploads/7.jpg') }}" alt="Image 7">
-                    </div>
-                    <div class="text">
-                        <h2>Image 7</h2>
-                        <p>astaghfirullah</p>
-                    </div>
-                </div>
+            @endforeach
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                {{ $post_all->links() }}
             </div>
         </div>
+
     </div>
 </div>
 @endsection
