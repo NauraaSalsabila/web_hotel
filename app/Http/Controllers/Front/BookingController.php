@@ -507,6 +507,88 @@ class BookingController extends Controller
 
 
     }
-
-
-}
+    public function cashPayment()
+    {
+        if (!Auth::guard('customer')->check()) {
+            return redirect()->back()->with('error', 'You must be logged in to complete the booking.');
+        }
+    
+        if (!session()->has('cart_room_id')) {
+            return redirect()->back()->with('error', 'There are no items in your cart.');
+        }
+    
+        $order_no = time();
+        $statement = DB::select("SHOW TABLE STATUS LIKE 'orders'");
+        $ai_id = $statement[0]->Auto_increment;
+    
+        $total_price = 0;
+    
+        // Insert Order
+        $order = new Order();
+        $order->customer_id = Auth::guard('customer')->user()->id;
+        $order->order_no = $order_no;
+        $order->transaction_id = $order_no . '-CASH'; // Cash does not have a transaction ID
+        $order->payment_method = 'Cash';
+        $order->card_last_digit = null; // Not applicable for cash
+        $order->paid_amount = 0; // Optional: set it to 0 or calculate later
+        $order->booking_date = date('d/m/Y');
+        $order->status = 'Pending'; // Mark as pending for cash
+        $order->save();
+    
+        // Cart Data
+        $cart_room_ids = session()->get('cart_room_id');
+        $cart_checkin_dates = session()->get('cart_checkin_date');
+        $cart_checkout_dates = session()->get('cart_checkout_date');
+        $cart_adults = session()->get('cart_adult');
+        $cart_children = session()->get('cart_children');
+    
+        for ($i = 0; $i < count($cart_room_ids); $i++) {
+            $room = Room::find($cart_room_ids[$i]);
+            $d1 = explode('/', $cart_checkin_dates[$i]);
+            $d2 = explode('/', $cart_checkout_dates[$i]);
+            $d1_new = $d1[2] . '-' . $d1[1] . '-' . $d1[0];
+            $d2_new = $d2[2] . '-' . $d2[1] . '-' . $d2[0];
+            $t1 = strtotime($d1_new);
+            $t2 = strtotime($d2_new);
+            $diff = ($t2 - $t1) / 60 / 60 / 24;
+            $sub_total = $room->price * $diff;
+            $total_price += $sub_total;
+    
+            // Insert Order Detail
+            $orderDetail = new OrderDetail();
+            $orderDetail->order_id = $ai_id;
+            $orderDetail->room_id = $cart_room_ids[$i];
+            $orderDetail->order_no = $order_no;
+            $orderDetail->checkin_date = $cart_checkin_dates[$i];
+            $orderDetail->checkout_date = $cart_checkout_dates[$i];
+            $orderDetail->adult = $cart_adults[$i];
+            $orderDetail->children = $cart_children[$i];
+            $orderDetail->subtotal = $sub_total;
+            $orderDetail->save();
+    
+            // Mark Room as Booked
+            while ($t1 < $t2) {
+                $bookedRoom = new BookedRoom();
+                $bookedRoom->booking_date = date('d/m/Y', $t1);
+                $bookedRoom->order_no = $order_no;
+                $bookedRoom->room_id = $cart_room_ids[$i];
+                $bookedRoom->save();
+                $t1 = strtotime('+1 day', $t1);
+            }
+        }
+    
+        // Update order with total price
+        $order->paid_amount = $total_price;
+        $order->save();
+    
+        // Clear Cart
+        session()->forget('cart_room_id');
+        session()->forget('cart_checkin_date');
+        session()->forget('cart_checkout_date');
+        session()->forget('cart_adult');
+        session()->forget('cart_children');
+    
+        return redirect('/')->with('success', 'Booking is completed successfully. Payment method: Cash.');
+    }
+    
+    }

@@ -38,7 +38,9 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($row->payment_proof)
+                                        @if($row->payment_method == 'Cash')
+                                            <span>No proof needed for Cash payment</span>
+                                        @elseif($row->payment_proof)
                                             <!-- Provide a link to view/download the payment proof -->
                                             <a href="{{ asset('storage/payment_proofs/' . $row->payment_proof) }}" target="_blank" class="btn btn-info btn-sm">View Proof</a>
                                         @else
@@ -54,8 +56,8 @@
                                             <p>Payment proof uploaded. Waiting for admin verification.</p>
                                         @endif
 
-                                        @if ($row->payment_status == 0 && !$row->payment_proof)
-                                            <!-- Upload payment proof -->
+                                        @if ($row->payment_status == 0 && !$row->payment_proof && $row->payment_method != 'Cash')
+                                            <!-- Upload payment proof if not cash -->
                                             <form action="{{ route('customer_upload_payment_proof', $row->id) }}" method="POST" enctype="multipart/form-data">
                                                 @csrf
                                                 <div class="form-group">

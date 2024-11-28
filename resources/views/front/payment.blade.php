@@ -2,7 +2,6 @@
 
 @section('main_content')
 
-<script src="https://www.paypalobjects.com/api/checkout.js"></script>
 
 <div class="page-top">
     <div class="bg"></div>
@@ -68,38 +67,61 @@
                         
                 <h4>Make Payment</h4>
                 <select name="payment_method" class="form-control select2" id="paymentMethodChange" autocomplete="off">
-                    <option value="">Select Payment Method</option>
-                    <option value="PayPal">PayPal</option>
-                    <option value="Stripe">Stripe</option>
-                </select>
+    <option value="">Select Payment Method</option>
+    <option value="Cash">Cash</option>
+    <option value="Stripe">Stripe</option>
+</select>
 
-                <div class="paypal mt_20">
-                    <h4>Pay with PayPal</h4>
-                    <div id="paypal-button"></div>
-                </div>
+<div class="stripe mt_20" style="display:none;">
+    <h4>Pay with Stripe</h4>
+    @php
+    $cents = $total_price * 100;
+    $customer_email = Auth::guard('customer')->user()->email;
+    $stripe_publishable_key = 'pk_test_51LT28GF67T3XLjgLXbAMW8YNgvDyv6Yrg7mB6yHJhfmWgLrAL79rSBPvxcbKrsKtCesqJmxlOd259nMrNx4Qlhoa00zX7rOhOq';
+    @endphp
+    <form action="{{ route('stripe', $total_price) }}" method="post">
+        @csrf
+        <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="{{ $stripe_publishable_key }}"
+            data-amount="{{ $cents }}"
+            data-name="{{ env('APP_NAME') }}"
+            data-description=""
+            data-image="{{ asset('stripe.png') }}"
+            data-currency="usd"
+            data-email="{{ $customer_email }}">
+        </script>
+    </form>
+</div>
 
-                <div class="stripe mt_20">
-                    <h4>Pay with Stripe</h4>
-                    @php
-                    $cents = $total_price*100;
-                    $customer_email = Auth::guard('customer')->user()->email;
-                    $stripe_publishable_key = 'pk_test_51LT28GF67T3XLjgLXbAMW8YNgvDyv6Yrg7mB6yHJhfmWgLrAL79rSBPvxcbKrsKtCesqJmxlOd259nMrNx4Qlhoa00zX7rOhOq';
-                    @endphp
-                    <form action="{{ route('stripe',$total_price) }}" method="post">
-                        @csrf
-                        <script
-                            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                            data-key="{{ $stripe_publishable_key }}"
-                            data-amount="{{ $cents }}"
-                            data-name="{{ env('APP_NAME') }}"
-                            data-description=""
-                            data-image="{{ asset('stripe.png') }}"
-                            data-currency="usd"
-                            data-email="{{ $customer_email }}"
-                        >
-                        </script>
-                    </form>
-                </div>
+<div class="cash mt_20" style="display:none;">
+    <h4>Pay with Cash</h4>
+    <p>Please confirm your order. Payment will be collected in cash upon delivery or at our physical store.</p>
+    <form action="{{ route('cash.payment') }}" method="post">
+        @csrf
+        <button type="submit" class="btn btn-primary">Confirm Payment</button>
+    </form>
+</div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#paymentMethodChange').on('change', function () {
+                    var method = $(this).val();
+
+                    // Sembunyikan semua metode pembayaran
+                    $('.stripe, .cash').hide();
+
+                    // Tampilkan metode yang sesuai
+                    if (method === 'Stripe') {
+                        $('.stripe').show();
+                    } else if (method === 'Cash') {
+                        $('.cash').show();
+                    }
+                });
+            });
+        </script>
+
 
             </div>
             <div class="col-lg-4 col-md-4 checkout-right">
@@ -196,7 +218,7 @@
                                                 $t1 = strtotime($d1_new);
                                                 $t2 = strtotime($d2_new);
                                                 $diff = ($t2-$t1)/60/60/24;
-                                                echo '$'.$room_data->price*$diff;
+                                                echo 'Rp'.$room_data->price*$diff;
                                             @endphp
                                         </td>
                                     </tr>
@@ -206,7 +228,7 @@
                                 @endphp                                
                                 <tr>
                                     <td><b>Total:</b></td>
-                                    <td class="p_price"><b>${{ $total_price }}</b></td>
+                                    <td class="p_price"><b>Rp{{ $total_price }}</b></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -216,41 +238,4 @@
         </div>
     </div>
 </div>
-
-@php
-$client = 'ARw2VtkTvo3aT7DILgPWeSUPjMK_AS5RlMKkUmB78O8rFCJcfX6jFSmTDpgdV3bOFLG2WE-s11AcCGTD';
-@endphp
-<script>
-	paypal.Button.render({
-		env: 'sandbox',
-		client: {
-			sandbox: '{{ $client }}',
-			production: '{{ $client }}'
-		},
-		locale: 'en_US',
-		style: {
-			size: 'medium',
-			color: 'blue',
-			shape: 'rect',
-		},
-		// Set up a payment
-		payment: function (data, actions) {
-			return actions.payment.create({
-				redirect_urls:{
-					return_url: '{{ url("payment/paypal/$total_price") }}'
-				},
-				transactions: [{
-					amount: {
-						total: '{{ $total_price }}',
-						currency: 'USD'
-					}
-				}]
-			});
-		},
-		// Execute the payment
-		onAuthorize: function (data, actions) {
-			return actions.redirect();
-		}
-	}, '#paypal-button');
-</script>
 @endsection

@@ -33,7 +33,7 @@
                                         <img src="{{ asset('uploads/'.$row->featured_photo) }}" alt="" class="w_200">
                                     </td>
                                     <td>{{ $row->name }}</td>
-                                    <td>${{ $row->price }}</td>
+                                    <td>Rp{{ $row->price }}</td>
                                     <td class="pt_10 pb_10">
                                         
                                         <button class="btn btn-warning" data-toggle="modal" data-target="#exampleModal{{ $i }}">Detail</button>

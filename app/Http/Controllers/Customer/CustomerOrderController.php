@@ -41,7 +41,12 @@ class CustomerOrderController extends Controller
 {
     $order = Order::findOrFail($orderId);
 
-    // Validate the file
+    // Hanya proses upload bukti pembayaran jika metode pembayaran bukan Cash
+    if ($order->payment_method == 'Cash') {
+        return redirect()->route('customer.orders')->with('info', 'No proof required for Cash payments.');
+    }
+
+    // Validate the file for non-Cash payments
     $request->validate([
         'payment_proof' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
     ]);

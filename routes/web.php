@@ -26,6 +26,9 @@ use App\Http\Controllers\Customer\CustomerProfileController;
 use App\Http\Controllers\Customer\CustomerOrderController;
 
 /* Front */
+Route::post('/pay-with-cash', [BookingController::class, 'payWithCash'])->name('pay.with.cash');
+Route::post('/cash-payment', [BookingController::class, 'cashPayment'])->name('cash.payment');
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/blog', [BlogController::class, 'index'])->name('blog');
 Route::get('/post/{id}', [BlogController::class, 'single_post'])->name('post');
