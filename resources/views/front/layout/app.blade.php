@@ -71,7 +71,6 @@
     }
 
     /* Footer and Buttons Styling */
-    .footer ul.social li a,
     .footer input[type="submit"],
     .scroll-top,
     .room-detail .right .widget .book-now {
@@ -163,6 +162,69 @@
         border-color: var(--hover-color); /* Border berubah warna saat hover */
     }
 
+    .footer-links a {
+    color: #ffffff; /* Warna tautan putih */
+    text-decoration: none; /* Menghilangkan garis bawah */
+    transition: color 0.3s; /* Efek transisi saat hover */
+}
+
+    .footer-links a:hover {
+        color: #ffc107; /* Warna saat hover */
+    }
+
+    .social-icon {
+        color: #ffffff; /* Warna ikon sosial putih */
+        font-size: 1.5rem; /* Ukuran ikon lebih besar */
+        transition: color 0.3s; /* Efek transisi saat hover */
+    }
+
+
+    .footer-message {
+        font-style: italic; /* Gaya teks miring untuk pesan */
+        font-size: 1.2rem; /* Ukuran font lebih besar */
+    }
+
+    .footer-contact span {
+        color: #ffffff; /* Warna teks kontak putih */
+    }
+    .footer-link {
+        position: relative;
+        display: inline-block;
+        text-decoration: none; /* Menghapus garis bawah default */
+        color: white; /* Sesuaikan warna sesuai kebutuhan */
+    }
+
+    .footer-link::after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 2px; /* Atur ketebalan garis */
+        background-color: white; /* Warna garis */
+        position: absolute;
+        bottom: -4px; /* Atur jarak garis dari teks */
+        left: 0;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .footer-link:hover::after {
+        opacity: 1;
+    }
+    .footer-divider {
+        border: none;
+        border-top: 2px solid white; 
+        margin: 10px 0; 
+        width: 100%; 
+    }
+    .footer-copyright {
+        text-transform: none; /* Tidak mengubah huruf */
+        font-size: 0.9rem;
+        color: #ccc;
+        font-weight: 400;
+        letter-spacing: 1px;
+    }
+
+
     /* Mobile Responsiveness */
     @media (max-width: 767px) {
         .main-nav nav .navbar-nav .nav-item a {
@@ -221,26 +283,26 @@
                             @else   
 
                             @if(Auth::guard('customer')->check())
-    <li class="menu"><a href="{{ route('customer_home') }}">History</a></li>
-    <li class="menu dropdown">
-        <a href="#" data-toggle="dropdown" class="dropdown-toggle">
-            @if(Auth::guard('customer')->user()->photo == '')
-                <img alt="image" src="{{ asset('uploads/default.png') }}" class="rounded-circle" style="width: 30px; height: 30px;">
-            @else
-                <img alt="image" src="{{ asset('uploads/'.Auth::guard('customer')->user()->photo) }}" class="rounded-circle" style="width: 30px; height: 30px;">
-            @endif
-            <span>{{ Auth::guard('customer')->user()->name }}</span>
-        </a>
-        <div class="dropdown-menu">
-            <a href="{{ route('customer_profile') }}" class="dropdown-item has-icon">
-                <i class="fa fa-user"></i> Edit Profile
-            </a>
-            <a href="{{ route('customer_logout') }}" class="dropdown-item has-icon text-danger">
-                <i class="fa fa-sign-out"></i> Logout
-            </a>
-        </div>
-    </li>
-@endif
+                                <li class="menu"><a href="{{ route('customer_home') }}">History</a></li>
+                                <li class="menu dropdown">
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                                        @if(Auth::guard('customer')->user()->photo == '')
+                                            <img alt="image" src="{{ asset('uploads/default.png') }}" class="rounded-circle" style="width: 30px; height: 30px;">
+                                        @else
+                                            <img alt="image" src="{{ asset('uploads/'.Auth::guard('customer')->user()->photo) }}" class="rounded-circle" style="width: 30px; height: 30px;">
+                                        @endif
+                                        <span>{{ Auth::guard('customer')->user()->name }}</span>
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a href="{{ route('customer_profile') }}" class="dropdown-item has-icon">
+                                            <i class="fa fa-user"></i> Edit Profile
+                                        </a>
+                                        <a href="{{ route('customer_logout') }}" class="dropdown-item has-icon text-danger">
+                                            <i class="fa fa-sign-out"></i> Logout
+                                        </a>
+                                    </div>
+                                </li>
+                            @endif
 
                             @endif
 
@@ -315,82 +377,96 @@
         @yield('main_content')
 
 
-        <div class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="item">
-                            <h2 class="heading">Site Links</h2>
-                            <ul class="useful-links">
-
-                                <li><a href="{{ route('home') }}">Home</a></li>
-
-                                @if($global_page_data->blog_status == 1)
-                                <li><a href="{{ route('blog') }}">{{ $global_page_data->blog_heading }}</a></li>
-                                @endif
-
-                                @if($global_page_data->contact_status == 1)
-                                <li><a href="{{ route('contact') }}">{{ $global_page_data->contact_heading }}</a></li>
-                                @endif
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    
-                    <div class="col-md-3">
-                        <div class="item">
-                            <h2 class="heading">Contact</h2>
-                            <div class="list-item">
-                                <div class="left">
-                                    <i class="fa fa-map-marker"></i>
-                                </div>
-                                <div class="right">
-                                    {!! nl2br($global_setting_data->footer_address) !!}
-                                </div>
-                            </div>
-                            <div class="list-item">
-                                <div class="left">
-                                    <i class="fa fa-volume-control-phone"></i>
-                                </div>
-                                <div class="right">
-                                    {{ $global_setting_data->footer_phone }}
-                                </div>
-                            </div>
-                            <div class="list-item">
-                                <div class="left">
-                                    <i class="fa fa-envelope-o"></i>
-                                </div>
-                                <div class="right">
-                                    {{ $global_setting_data->footer_email }}
-                                </div>
-                            </div>
-                            <ul class="social">
-
-                                @if($global_setting_data->facebook != '')
-                                <li><a href="{{ $global_setting_data->facebook }}"><i class="fa fa-facebook-f"></i></a></li>
-                                @endif
-
-                                @if($global_setting_data->twitter != '')
-                                <li><a href="{{ $global_setting_data->twitter }}"><i class="fa fa-twitter"></i></a></li>
-                                @endif
-
-                                @if($global_setting_data->linkedin != '')
-                                <li><a href="{{ $global_setting_data->linkedin }}"><i class="fa fa-linkedin"></i></a></li>
-                                @endif
-
-                                @if($global_setting_data->pinterest != '')
-                                <li><a href="{{ $global_setting_data->pinterest }}"><i class="fa fa-pinterest-p"></i></a></li>
-                                @endif
-                                
-                            </ul>
-                        </div>
-                    </div>
-
-
-
-                </div>
+        <div class="footer bg-dark text-white py-5">
+        <div class="container">
+        <!-- Site Links -->
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="d-flex justify-content-center list-unstyled gap-4 footer-links">
+                    <li><a href="{{ route('home') }}" class="footer-link">HOME</a></li>
+                    @if($global_page_data->blog_status == 1)
+                    <li><a href="{{ route('blog') }}" class="footer-link">{{ $global_page_data->blog_heading }}</a></li>
+                    @endif
+                    @if($global_page_data->contact_status == 1)
+                    <li><a href="{{ route('contact') }}" class="footer-link">{{ $global_page_data->contact_heading }}</a></li>
+                    @endif
+                </ul>
+                <hr class="footer-divider">
             </div>
         </div>
+
+        <!-- Social Links and Message -->
+        <div class="row mt-4">
+            <!-- Social Links -->
+            <div class="col-md-12 text-center">
+            <ul class="social d-flex justify-content-center list-unstyled gap-3">
+                    <li><a href="https://www.youtube.com/" class="social-icon text-white bg-danger rounded-circle d-flex align-items-center justify-content-center"><i class="fa fa-facebook-f"></i></a></li>
+                    <li><a href="https://www.twitter.com/" class="social-icon rounded-circle"><i class="fa fa-twitter"></i></a></li>                   
+                    <li><a href="https://www.linkedin.com/" class="social-icon rounded-circle"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a href="https://www.pinterest.com/" class="social-icon rounded-circle"><i class="fa fa-pinterest-p"></i></a></li>
+                    <li>
+                        <a href="https://www.youtube.com/" class="social-icon text-white bg-black rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.instagram.com/" class="social-icon text-white bg-black rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://plus.google.com/" class="social-icon text-white bg-black rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="fab fa-google-plus-g"></i>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+            <!-- Message -->
+            <div class="col-md-12 text-center mt-3">
+                <p class="footer-message">We always on Unila.</p>
+            </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-contact bg-dark text-white py-4">
+    <div class="container text-center">
+        <!-- Judul and Subtitle -->
+        <h3 class="footer-title">We're based in Kedaton, Embung.</h3>
+        <p class="footer-subtitle">We work with clients from all over. Get in touch with us!</p>
+
+        <!-- Contact Information -->
+        <div class="footer-info d-flex justify-content-center align-items-center flex-wrap gap-4 mt-3">
+            <span class="d-flex align-items-center gap-2">
+                <i class="fa fa-envelope text-danger"></i>
+                <a href="mailto:info@alanterealestate.com" class="text-white text-decoration-none fw-bold">infokamar@gmail.com</a>
+            </span>
+            <span class="d-flex align-items-center gap-2">
+                <i class="fa fa-phone text-light"></i>
+                <span class="text-white">0822-6767-1268</span>
+            </span>
+            <span class="d-flex align-items-center gap-2">
+                <i class="fa fa-home text-light"></i>
+                <span class="text-white">
+                    Bandar Lampung, 25 Sandwich Street, Lampung, 02360
+                </span>
+            </span>
+        </div>
+    </div>
+</div>
+
+
+        <!-- Copyright -->
+        <div class="row mt-4">
+    <hr class="footer-divider">
+    <div class="col-md-12 text-center">
+    <p class="footer-copyright">&copy; 2024 WebHotels. All Rights On Air.</p>
+    </div>
+</div>
+
+</div>
+
 
 
      
