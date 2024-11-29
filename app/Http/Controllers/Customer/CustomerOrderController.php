@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers\Customer;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Auth;
-use App\Models\Customer;
 use App\Models\Order;
+use App\Models\Customer;
 use App\Models\OrderDetail;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerOrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::where('customer_id',Auth::guard('customer')->user()->id)->get();
+        // Fetch orders for the logged-in customer, sorted by 'created_at' or 'booking_date' in descending order
+        $orders = Order::where('customer_id', Auth::guard('customer')->user()->id)
+                       ->orderBy('created_at', 'desc') // Sort by 'created_at' or 'booking_date'
+                       ->get();
+
         return view('customer.orders', compact('orders'));
     }
 
@@ -38,35 +42,32 @@ class CustomerOrderController extends Controller
     }
 
     public function uploadPaymentProof(Request $request, $orderId)
-{
-    $order = Order::findOrFail($orderId);
+    {
+        $order = Order::findOrFail($orderId);
 
-    // Hanya proses upload bukti pembayaran jika metode pembayaran bukan Cash
-    if ($order->payment_method == 'Cash') {
-        return redirect()->route('customer.orders')->with('info', 'No proof required for Cash payments.');
+        // Hanya proses upload bukti pembayaran jika metode pembayaran bukan Cash
+        if ($order->payment_method == 'Cash') {
+            return redirect()->route('customer.orders')->with('info', 'No proof required for Cash payments.');
+        }
+
+        // Validate the file for non-Cash payments
+        $request->validate([
+            'payment_proof' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
+        ]);
+
+        // Store the file in the 'public/payment_proofs' directory
+        if ($request->hasFile('payment_proof')) {
+            $file = $request->file('payment_proof');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+
+            // Store the file
+            $path = $file->storeAs('public/payment_proofs', $filename);
+
+            // Save the file path in the database
+            $order->payment_proof = $filename;
+            $order->save();
+        }
+
+        return redirect()->route('customer.orders')->with('success', 'Payment proof uploaded successfully!');
     }
-
-    // Validate the file for non-Cash payments
-    $request->validate([
-        'payment_proof' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
-    ]);
-
-    // Store the file in the 'public/payment_proofs' directory
-    if ($request->hasFile('payment_proof')) {
-        $file = $request->file('payment_proof');
-        $filename = time() . '.' . $file->getClientOriginalExtension();
-
-        // Store the file
-        $path = $file->storeAs('public/payment_proofs', $filename);
-
-        // Save the file path in the database
-        $order->payment_proof = $filename;
-        $order->save();
-    }
-
-    return redirect()->route('customer.orders')->with('success', 'Payment proof uploaded successfully!');
-}
-
-
-    
 }

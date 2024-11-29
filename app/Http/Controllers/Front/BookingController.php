@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Customer;
-use App\Models\Order;
-use App\Models\OrderDetail;
-use App\Models\BookedRoom;
+use Stripe\Charge;
+use Stripe\Stripe;
 use App\Models\Room;
-use Auth;
-use DB;
-use App\Mail\Websitemail;
+use App\Models\Order;
 use PayPal\Api\Amount;
 use PayPal\Api\Details;
 use PayPal\Api\Payment;
-use PayPal\Api\PaymentExecution;
+use App\Models\Customer;
+use App\Mail\Websitemail;
+use App\Models\BookedRoom;
+use App\Models\OrderDetail;
 use PayPal\Api\Transaction;
-Use Stripe;
+use Illuminate\Http\Request;
+use PayPal\Api\PaymentExecution;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+
 
 class BookingController extends Controller
 {
@@ -503,7 +505,7 @@ class BookingController extends Controller
         session()->forget('billing_city');
         session()->forget('billing_zip');
 
-        return redirect()->route('home')->with('success', 'Payment is successful');
+        return redirect()->route('customer_order_view')->with('success', 'Payment is successful, please upload your payment proof!');
 
 
     }

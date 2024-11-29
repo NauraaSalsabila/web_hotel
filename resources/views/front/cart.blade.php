@@ -15,8 +15,6 @@
     <div class="container">
         <div class="row cart">
             <div class="col-md-12">
-                
-
                 @if(session()->has('cart_room_id'))
 
                 <div class="table-responsive">
@@ -37,83 +35,73 @@
                         <tbody>
 
                             @php
-                            $arr_cart_room_id = array();
-                            $i=0;
-                            foreach(session()->get('cart_room_id') as $value) {
-                                $arr_cart_room_id[$i] = $value;
-                                $i++;
-                            }
-
-                            $arr_cart_checkin_date = array();
-                            $i=0;
-                            foreach(session()->get('cart_checkin_date') as $value) {
-                                $arr_cart_checkin_date[$i] = $value;
-                                $i++;
-                            }
-
-                            $arr_cart_checkout_date = array();
-                            $i=0;
-                            foreach(session()->get('cart_checkout_date') as $value) {
-                                $arr_cart_checkout_date[$i] = $value;
-                                $i++;
-                            }
-
-                            $arr_cart_adult = array();
-                            $i=0;
-                            foreach(session()->get('cart_adult') as $value) {
-                                $arr_cart_adult[$i] = $value;
-                                $i++;
-                            }
-
-                            $arr_cart_children = array();
-                            $i=0;
-                            foreach(session()->get('cart_children') as $value) {
-                                $arr_cart_children[$i] = $value;
-                                $i++;
-                            }
-
+                            $arr_cart_room_id = session()->get('cart_room_id', []);
+                            $arr_cart_checkin_date = session()->get('cart_checkin_date', []);
+                            $arr_cart_checkout_date = session()->get('cart_checkout_date', []);
+                            $arr_cart_adult = session()->get('cart_adult', []);
+                            $arr_cart_children = session()->get('cart_children', []);
+                            
                             $total_price = 0;
-                            for($i=0;$i<count($arr_cart_room_id);$i++)
-                            {
-                                $room_data = DB::table('rooms')->where('id',$arr_cart_room_id[$i])->first();
+                            @endphp
+
+                            @foreach($arr_cart_room_id as $i => $room_id)
+                                @php
+                                    $room_data = DB::table('rooms')->where('id', $room_id)->first();
+
+                                    // Ensure valid check-in and check-out dates are set
+                                    $checkin_date = isset($arr_cart_checkin_date[$i]) ? $arr_cart_checkin_date[$i] : null;
+                                    $checkout_date = isset($arr_cart_checkout_date[$i]) ? $arr_cart_checkout_date[$i] : null;
+                                    $adult_count = isset($arr_cart_adult[$i]) ? $arr_cart_adult[$i] : 0;
+                                    $children_count = isset($arr_cart_children[$i]) ? $arr_cart_children[$i] : 0;
+
+                                    // Check if both dates are set and valid
+                                    if ($checkin_date && $checkout_date) {
+                                        $d1 = explode('/', $checkin_date);
+                                        $d2 = explode('/', $checkout_date);
+
+                                        // Validate if the date arrays are not empty
+                                        if (count($d1) == 3 && count($d2) == 3) {
+                                            $d1_new = $d1[2].'-'.$d1[1].'-'.$d1[0];
+                                            $d2_new = $d2[2].'-'.$d2[1].'-'.$d2[0];
+                                            $t1 = strtotime($d1_new);
+                                            $t2 = strtotime($d2_new);
+                                            $diff = ($t2 - $t1) / 60 / 60 / 24;
+                                            $subtotal = $room_data->price * $diff;
+                                        } else {
+                                            $subtotal = 0;
+                                        }
+                                    } else {
+                                        $subtotal = 0;
+                                    }
+
+                                    $total_price += $subtotal;
                                 @endphp
+
                                 <tr>
                                     <td>
-                                        <a href="{{ route('cart_delete',$arr_cart_room_id[$i]) }}" class="cart-delete-link" onclick="return confirm('Are you sure?');"><i class="fa fa-times"></i></a>
+                                        <a href="{{ route('cart_delete', $room_id) }}" class="cart-delete-link" onclick="return confirm('Are you sure?');"><i class="fa fa-times"></i></a>
                                     </td>
-                                    <td>{{ $i+1 }}</td>
+                                    <td>{{ $i + 1 }}</td>
                                     <td><img src="{{ asset('uploads/'.$room_data->featured_photo) }}"></td>
                                     <td>
-                                        <a href="{{ route('room_detail',$room_data->id) }}" class="room-name">{{ $room_data->name }}</a>
+                                        <a href="{{ route('room_detail', $room_data->id) }}" class="room-name">{{ $room_data->name }}</a>
                                     </td>
-                                    <td>Rp{{ $room_data->price }}</td>
-                                    <td>{{ $arr_cart_checkin_date[$i] }}</td>
-                                    <td>{{ $arr_cart_checkout_date[$i] }}</td>
+                                    <td>Rp{{ number_format($room_data->price, 0, ',', '.') }}</td>
+                                    <td>{{ $checkin_date }}</td>
+                                    <td>{{ $checkout_date }}</td>
                                     <td>
-                                        Adult: {{ $arr_cart_adult[$i] }}<br>
-                                        Children: {{ $arr_cart_children[$i] }}
+                                        Adult: {{ $adult_count }}<br>
+                                        Children: {{ $children_count }}
                                     </td>
-                                    <td>
-                                    @php
-                                        $d1 = explode('/',$arr_cart_checkin_date[$i]);
-                                        $d2 = explode('/',$arr_cart_checkout_date[$i]);
-                                        $d1_new = $d1[2].'-'.$d1[1].'-'.$d1[0];
-                                        $d2_new = $d2[2].'-'.$d2[1].'-'.$d2[0];
-                                        $t1 = strtotime($d1_new);
-                                        $t2 = strtotime($d2_new);
-                                        $diff = ($t2-$t1)/60/60/24;
-                                        echo 'Rp'.$room_data->price*$diff;
-                                    @endphp
-                                    </td>
+                                    <td>Rp{{ number_format($subtotal, 0, ',', '.') }}</td>
                                 </tr>
-                                @php
-                                $total_price = $total_price+($room_data->price*$diff);
-                            }
-                            @endphp                            
+                            @endforeach
+
                             <tr>
                                 <td colspan="8" class="tar">Total:</td>
-                                <td>Rp{{ $total_price }}</td>
+                                <td>Rp{{ number_format($total_price, 0, ',', '.') }}</td>
                             </tr>
+
                         </tbody>
                     </table>
                 </div>
