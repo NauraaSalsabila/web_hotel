@@ -85,16 +85,6 @@
                                     <input type="text" class="form-control" name="total_guests" value="{{ $room_data->total_guests }}">
                                 </div>
                                 <div class="mb-4">
-                                    <label class="form-label">Video Preview</label>
-                                    <div class="iframe-container1">
-                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $room_data->video_id }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                    </div>
-                                </div>
-                                <div class="mb-4">
-                                    <label class="form-label">Video Id</label>
-                                    <input type="text" class="form-control" name="video_id" value="{{ $room_data->video_id }}">
-                                </div>
-                                <div class="mb-4">
                                     <label class="form-label"></label>
                                     <button type="submit" class="btn btn-primary">Update</button>
                                 </div>

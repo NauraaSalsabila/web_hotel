@@ -109,14 +109,6 @@
                                                     <div class="col-md-4"><label class="form-label">Total Guests</label></div>
                                                     <div class="col-md-8">{{ $row->total_guests }}</div>
                                                 </div>
-                                                <div class="form-group row bdb1 pt_10 mb_0">
-                                                    <div class="col-md-4"><label class="form-label">Video</label></div>
-                                                    <div class="col-md-8">
-                                                        <div class="iframe-container1">
-                                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $row->video_id }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
