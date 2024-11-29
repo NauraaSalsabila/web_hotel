@@ -76,6 +76,7 @@
             .room-detail .amenity .item,
             .cart .table-cart tr th {
                 background-color: {{ $global_setting_data->theme_color_2 }}!important;
+
             }
         </style>
 
@@ -154,24 +155,25 @@
         </div>
 
 
-        <div class="navbar-area" id="stickymenu">
+                <!-- Bagian logo di Mobile Navigation -->
+        <div class="mobile-nav">
+            <a href="index.html" class="logo">
+                <img src="/uploads/Logo.png" alt="Logo">
+            </a>
+        </div>
 
-            <!-- Menu For Mobile Device -->
-            <div class="mobile-nav">
-                <a href="index.html" class="logo">
-                    <img src="{{ asset('uploads/'.$global_setting_data->logo) }}" alt="">
-                </a>
-            </div>
-        
-            <!-- Menu For Desktop Device -->
-            <div class="main-nav">
-                <div class="container">
-                    <nav class="navbar navbar-expand-md navbar-light">
-                        <a class="navbar-brand" href="{{ route('home') }}">
-                            <img src="{{ asset('uploads/'.$global_setting_data->logo) }}" alt="">
-                        </a>
-                        <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
-                            <ul class="navbar-nav ml-auto">        
+        <!-- Bagian logo di Desktop Navigation -->
+        <div class="main-nav">
+            <div class="container">
+                <nav class="navbar navbar-expand-md navbar-light">
+                    <a class="navbar-brand" href="{{ route('home') }}">
+                        <img src="/uploads/Logo.png" alt="Logo">
+                    </a>
+                    <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto">
+                            <!-- Daftar menu -->
+
+            
                                 <li class="nav-item">
                                     <a href="{{ route('home') }}" class="nav-link">Home</a>
                                 </li>
