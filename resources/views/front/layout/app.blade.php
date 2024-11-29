@@ -26,59 +26,156 @@
             gtag('config', '{{ $global_setting_data->analytic_id }}');
         </script>
 
-        <style>
-            .main-nav nav .navbar-nav .nav-item a:hover,
-            .main-nav nav .navbar-nav .nav-item:hover a,
-            .slide-carousel.owl-carousel .owl-nav .owl-prev:hover, 
-            .slide-carousel.owl-carousel .owl-nav .owl-next:hover,
-            .home-feature .inner .icon i,
-            .home-rooms .inner .text .price,
-            .home-rooms .inner .text .button a,
-            .blog-item .inner .text .button a,
-            .room-detail-carousel.owl-carousel .owl-nav .owl-prev:hover, 
-            .room-detail-carousel.owl-carousel .owl-nav .owl-next:hover {
-                color: {{ $global_setting_data->theme_color_1 }};
-            }
+<style>
+    /* Warna Utama - Biru dan Putih */
+    :root {
+        --primary-color: #2196F3; /* Biru */
+        --secondary-color: #ffffff; /* Putih */
+        --hover-color: #0d47a1; /* Biru lebih gelap untuk hover */
+        --border-color: #2196F3; /* Warna border biru */
+    }
 
-            .main-nav nav .navbar-nav .nav-item .dropdown-menu li a:hover,
-            .primary-color {
-                color: {{ $global_setting_data->theme_color_1 }}!important;
-            }
+    /* Navigation Hover Effects */
+    .main-nav nav .navbar-nav .nav-item a:hover,
+    .main-nav nav .navbar-nav .nav-item:hover a,
+    .slide-carousel.owl-carousel .owl-nav .owl-prev:hover, 
+    .slide-carousel.owl-carousel .owl-nav .owl-next:hover,
+    .home-feature .inner .icon i,
+    .home-rooms .inner .text .price,
+    .home-rooms .inner .text .button a,
+    .blog-item .inner .text .button a,
+    .room-detail-carousel.owl-carousel .owl-nav .owl-prev:hover, 
+    .room-detail-carousel.owl-carousel .owl-nav .owl-next:hover {
+        color: var(--primary-color);
+        transition: color 0.3s ease;
+        font-weight: bold;
+    }
 
-            .testimonial-carousel .owl-dots .owl-dot,
-            .footer ul.social li a,
-            .footer input[type="submit"],
-            .scroll-top,
-            .room-detail .right .widget .book-now {
-                background-color: {{ $global_setting_data->theme_color_1 }};
-            }
+    /* Dropdown Hover Effects */
+    .main-nav nav .navbar-nav .nav-item .dropdown-menu li a:hover,
+    .primary-color {
+        color: var(--primary-color)!important;
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
 
-            .slider .text .button a,
-            .search-section button[type="submit"],
-            .home-rooms .big-button a,
-            .bg-website {
-                background-color: {{ $global_setting_data->theme_color_1 }}!important;
-            }
+    /* Testimonial Carousel Dot Hover */
+    .testimonial-carousel .owl-dots .owl-dot {
+        background-color: var(--primary-color)!important;
+        transition: background-color 0.3s ease;
+    }
 
-            .slider .text .button a,
-            .slide-carousel.owl-carousel .owl-nav .owl-prev:hover, 
-            .slide-carousel.owl-carousel .owl-nav .owl-next:hover,
-            .search-section button[type="submit"],
-            .room-detail-carousel.owl-carousel .owl-nav .owl-prev:hover, 
-            .room-detail-carousel.owl-carousel .owl-nav .owl-next:hover,
-            .room-detail .amenity .item {
-                border-color: {{ $global_setting_data->theme_color_1 }}!important;
-            }
+    .testimonial-carousel .owl-dots .owl-dot.active {
+        background-color: var(--secondary-color)!important;
+    }
 
-            .home-feature .inner .icon i,
-            .home-rooms .inner .text .button a,
-            .blog-item .inner .text .button a,
-            .room-detail .amenity .item,
-            .cart .table-cart tr th {
-                background-color: {{ $global_setting_data->theme_color_2 }}!important;
+    /* Footer and Buttons Styling */
+    .footer ul.social li a,
+    .footer input[type="submit"],
+    .scroll-top,
+    .room-detail .right .widget .book-now {
+        background-color: var(--primary-color);
+        border-radius: 50px;
+        padding: 10px 20px;
+        transition: background-color 0.3s ease;
+        border: 2px solid var(--primary-color); /* Menambahkan border biru */
+    }
 
-            }
-        </style>
+    /* Hover Effect for Footer Links */
+    .footer ul.social li a:hover,
+    .footer input[type="submit"]:hover {
+        background-color: var(--hover-color);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transform: scale(1.1);
+        border-color: var(--hover-color); /* Border berubah saat hover */
+    }
+
+    /* Buttons with Hover Effect */
+    .slider .text .button a,
+    .search-section button[type="submit"],
+    .home-rooms .big-button a,
+    .bg-website {
+        background-color: var(--primary-color)!important;
+        border-radius: 25px;
+        padding: 10px 20px;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+        border: 2px solid var(--primary-color); /* Menambahkan border biru */
+    }
+
+    /* Hover Effect for Buttons */
+    .slider .text .button a:hover,
+    .search-section button[type="submit"]:hover,
+    .home-rooms .big-button a:hover,
+    .bg-website:hover {
+        background-color: var(--hover-color)!important;
+        transform: translateY(-5px);
+        border-color: var(--hover-color); /* Border berubah jadi biru lebih gelap saat hover */
+    }
+
+    /* Border Color Effects for Various Elements */
+    .slider .text .button a,
+    .slide-carousel.owl-carousel .owl-nav .owl-prev:hover, 
+    .slide-carousel.owl-carousel .owl-nav .owl-next:hover,
+    .search-section button[type="submit"],
+    .room-detail-carousel.owl-carousel .owl-nav .owl-prev:hover, 
+    .room-detail-carousel.owl-carousel .owl-nav .owl-next:hover,
+    .room-detail .amenity .item {
+        border-color: var(--border-color)!important;
+        transition: border-color 0.3s ease;
+        border-width: 2px; /* Menambahkan ketebalan border */
+        border-style: solid; /* Menambahkan gaya border solid */
+    }
+
+    /* Hover Effect for Amenity Items */
+    .room-detail .amenity .item:hover {
+        background-color: var(--primary-color)!important;
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-color: var(--hover-color); /* Border berubah menjadi biru gelap saat hover */
+    }
+
+    /* Background Color for Items */
+    .home-feature .inner .icon i,
+    .home-rooms .inner .text .button a,
+    .blog-item .inner .text .button a,
+    .room-detail .amenity .item,
+    .cart .table-cart tr th {
+        background-color: var(--secondary-color)!important;
+        transition: background-color 0.3s ease;
+        padding: 8px 15px;
+        border-radius: 5px;
+        border: 2px solid var(--border-color); /* Menambahkan border biru pada item */
+    }
+
+    /* Hover Effect for Items */
+    .home-feature .inner .icon i:hover,
+    .home-rooms .inner .text .button a:hover,
+    .blog-item .inner .text .button a:hover,
+    .room-detail .amenity .item:hover,
+    .cart .table-cart tr th:hover {
+        background-color: var(--primary-color)!important;
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-color: var(--hover-color); /* Border berubah warna saat hover */
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 767px) {
+        .main-nav nav .navbar-nav .nav-item a {
+            font-size: 14px;
+            padding: 10px;
+        }
+        .footer ul.social li a,
+        .footer input[type="submit"] {
+            padding: 8px 16px;
+        }
+    }
+</style>
+
 
     </head>
     <body>
