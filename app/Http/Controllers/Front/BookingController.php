@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use Stripe\Charge;
-use Stripe\Stripe;
+use Stripe;
 use App\Models\Room;
 use App\Models\Order;
 use App\Models\Customer;
@@ -184,21 +184,35 @@ class BookingController extends Controller
         return view('front.payment');
     }
 
-    public function stripe(Request $request,$final_price)
-    {
-        $stripe_secret_key = 'sk_test_51LT28GF67T3XLjgL8ICWowviN9gL7cXzOr1hPOEVX94aizsO58jdO1CtIBpo583748yVPzAV46pivFolrjqZddSx00PSAfpyff';
-        $cents = $final_price*100;
-        Stripe\Stripe::setApiKey($stripe_secret_key);
-        $response = Stripe\Charge::create ([
-            "amount" => $cents,
-            "currency" => "usd",
+    public function stripe(Request $request, $final_price)
+{
+    $stripe_secret_key = 'sk_test_51LT28GF67T3XLjgL8ICWowviN9gL7cXzOr1hPOEVX94aizsO58jdO1CtIBpo583748yVPzAV46pivFolrjqZddSx00PSAfpyff';
+
+    // Mengonversi harga akhir ke sen (cents), 1 IDR = 1 sen
+    $cents = $final_price * 100;
+
+    // Tentukan batas maksimal jumlah yang diterima oleh Stripe untuk IDR
+    $max_amount = 999999999; // Batas maksimal untuk transaksi IDR (999,999.99 IDR dalam sen)
+    if ($cents > $max_amount) {
+        $cents = $max_amount;  // Membatasi jumlah ke batas maksimal
+    }
+
+    Stripe\Stripe::setApiKey($stripe_secret_key);
+
+    try {
+        $response = Stripe\Charge::create([
+            "amount" => $cents, // Jumlah dalam sen
+            "currency" => "idr", // Mata uang IDR
             "source" => $request->stripeToken,
             "description" => env('APP_NAME')
         ]);
+    } catch (\Exception $e) {
+        return back()->withError('Payment failed: ' . $e->getMessage());
+    }
 
-        $responseJson = $response->jsonSerialize();
-        $transaction_id = $responseJson['balance_transaction'];
-        $last_4 = $responseJson['payment_method_details']['card']['last4'];
+    $responseJson = $response->jsonSerialize();
+    $transaction_id = $responseJson['balance_transaction'];
+    $last_4 = $responseJson['payment_method_details']['card']['last4'];
 
         $order_no = time();
 
