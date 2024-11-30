@@ -14,44 +14,47 @@ class CustomerAuthController extends Controller
 {
     public function login()
     {
+        // Periksa apakah customer sudah login
+        if (Auth::guard('customer')->check()) {
+            return redirect()->route('home'); // Redirect ke halaman utama jika sudah login
+        }
+
         return view('front.login');
     }
 
     public function login_submit(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required'
-    ]);
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
 
-    if (Auth::guard('admin')->check()) {
-        Auth::guard('admin')->logout();
+        // Pastikan tidak ada sesi admin yang aktif
+        if (Auth::guard('admin')->check()) {
+            Auth::guard('admin')->logout();
+        }
+
+        $customer = Customer::where('email', $request->email)->first();
+
+        if (!$customer) {
+            return redirect()->route('customer_login')->with('error', 'Email or password is incorrect!');
+        }
+
+        if ($customer->status == 0) {
+            return redirect()->route('customer_login')->with('error', 'Your account has not been verified yet. Please wait for admin verification.');
+        }
+
+        $credential = [
+            'email' => $request->email,
+            'password' => $request->password
+        ];
+
+        if (Auth::guard('customer')->attempt($credential)) {
+            return redirect()->route('home');
+        } else {
+            return redirect()->route('customer_login')->with('error', 'Email or password is incorrect!');
+        }
     }
-
-    // Periksa apakah email terdaftar
-    $customer = Customer::where('email', $request->email)->first();
-
-    if (!$customer) {
-        return redirect()->route('customer_login')->with('error', 'Email or password is incorrect!');
-    }
-
-    // Periksa apakah akun belum diverifikasi
-    if ($customer->status == 0) {
-        return redirect()->route('customer_login')->with('error', 'Your account has not been verified yet. Please wait for admin verification.');
-    }
-
-    // Coba autentikasi dengan kredensial
-    $credential = [
-        'email' => $request->email,
-        'password' => $request->password
-    ];
-
-    if (Auth::guard('customer')->attempt($credential)) {
-        return redirect()->route('home');
-    } else {
-        return redirect()->route('customer_login')->with('error', 'Email or password is incorrect!');
-    }
-}
 
 
 

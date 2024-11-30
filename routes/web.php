@@ -43,7 +43,6 @@ Route::get('/cart/delete/{id}', [BookingController::class, 'cart_delete'])->name
 Route::get('/checkout', [BookingController::class, 'checkout'])->name('checkout');
 Route::post('/payment', [BookingController::class, 'payment'])->name('payment');
 
-Route::get('/payment/paypal/{price}', [BookingController::class, 'paypal'])->name('paypal');
 Route::post('/payment/stripe/{price}', [BookingController::class, 'stripe'])->name('stripe');
 
 
@@ -57,49 +56,42 @@ Route::post('/admin/reset-password-submit', [AdminLoginController::class, 'reset
 Route::put('/admin/orders/change-payment-status/{id}', [AdminOrderController::class, 'change_payment_status'])->name('admin.order.change_payment_status');
 Route::get('admin/order/verify-payment/{id}', [AdminOrderController::class, 'change_payment_status'])->name('admin_order_verify_payment');
 
+// Customer Authentication Routes (untuk pengguna yang belum login)
 Route::middleware(['guest:customer'])->group(function () {
     Route::get('/login', [CustomerAuthController::class, 'login'])->name('customer_login');
     Route::post('/login-submit', [CustomerAuthController::class, 'login_submit'])->name('customer_login_submit');
-});
-
-// Customer Authentication Routes
-Route::middleware(['guest:customer'])->group(function () {
 
     // Route for the signup form
     Route::get('/signup', [CustomerAuthController::class, 'signup'])->name('customer_signup');
-    
+
     // Route for submitting the signup form
     Route::post('/signup-submit', [CustomerAuthController::class, 'signup_submit'])->name('customer_signup_submit');
-    
+
     // Route for verifying the email after signup
     Route::get('/signup-verify/{email}/{token}', [CustomerAuthController::class, 'signup_verify'])->name('customer_signup_verify');
-    
+
     // Route for resetting the password
     Route::get('/reset-password/{token}/{email}', [CustomerAuthController::class, 'reset_password'])->name('customer_reset_password');
     Route::post('/reset-password-submit', [CustomerAuthController::class, 'reset_password_submit'])->name('customer_reset_password_submit');
 });
-Route::get('/customer/orders', [CustomerOrderController::class, 'index'])->name('customer.orders');
 
-Route::middleware('auth:customer')->group(function () {
-    Route::post('/customer/upload-payment-proof/{orderId}', [CustomerOrderController::class, 'uploadPaymentProof'])->name('customer_upload_payment_proof');
-});
-
-// Route for customer logout
-Route::get('/customer/logout', [CustomerAuthController::class, 'logout'])->name('customer_logout');
-
-// Customer routes with middleware applied (for logged-in users)
-Route::middleware(['customer:customer'])->group(function () {
-    // Route for customer home page
+// Customer routes yang hanya bisa diakses oleh pengguna yang sudah login
+Route::middleware(['auth:customer'])->group(function () {
+    // Route untuk halaman utama pelanggan
     Route::get('/customer/home', [CustomerHomeController::class, 'index'])->name('customer_home');
-    
-    // Route for editing customer profile
+
+    // Route untuk mengedit profil pelanggan
     Route::get('/customer/edit-profile', [CustomerProfileController::class, 'index'])->name('customer_profile');
     Route::post('/customer/edit-profile-submit', [CustomerProfileController::class, 'profile_submit'])->name('customer_profile_submit');
-    
-    // Route for viewing customer orders
+
+    // Route untuk melihat pesanan pelanggan
     Route::get('/customer/order/view', [CustomerOrderController::class, 'index'])->name('customer_order_view');
     Route::get('/customer/invoice/{id}', [CustomerOrderController::class, 'invoice'])->name('customer_invoice');
+
+    // Route untuk logout
+    Route::get('/customer/logout', [CustomerAuthController::class, 'logout'])->name('customer_logout');
 });
+
 
 
 
