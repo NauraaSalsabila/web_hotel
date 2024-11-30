@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use Stripe\Charge;
-use Stripe\Stripe;
+use Stripe;
 use App\Models\Room;
 use App\Models\Order;
 use App\Models\Customer;

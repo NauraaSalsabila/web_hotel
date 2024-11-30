@@ -247,15 +247,10 @@
                 <div class="row">
                     <div class="col-md-6 left-side">
                         <ul>
-
-                            @if($global_setting_data->top_bar_phone != '')
-                            <li class="phone-text">{{ $global_setting_data->top_bar_phone }}</li>
-                            @endif
-                            
-                            @if($global_setting_data->top_bar_email != '')
-                            <li class="email-text">{{ $global_setting_data->top_bar_email }}</li>
-                            @endif
-
+                            <!-- Mengganti nilai dengan manual -->
+                            <li class="phone-text">0822-6767-1268</li>
+                            <li class="email-text">infokamar@gmail.com</li>
+                        </ul>
                         </ul>
                     </div>
                     <div class="col-md-6 right-side">
