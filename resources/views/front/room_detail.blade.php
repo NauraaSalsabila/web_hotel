@@ -93,8 +93,9 @@
                     <div class="widget">
                         <h2>Room Price per Night</h2>
                         <div class="price">
-                            Rp{{ $single_room_data->price }}
+                            Rp{{ number_format($single_room_data->price, 2, ',', '.') }}
                         </div>
+
                     </div>
                     <div class="widget">
                         <h2>Reserve This Room</h2>

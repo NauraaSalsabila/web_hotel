@@ -29,7 +29,7 @@
                                     <td>{{ $row->order_no }}</td>
                                     <td>{{ $row->payment_method }}</td>
                                     <td>{{ $row->booking_date }}</td>
-                                    <td>{{ $row->paid_amount }}</td>
+                                    <td>Rp{{ number_format($row->paid_amount, 0, ',', '.') }}</td>
                                     <td>
                                         @if ($row->payment_status == 1)
                                             <span class="badge bg-success">Verified</span>
