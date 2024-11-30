@@ -25,4 +25,22 @@ class AdminCustomerController extends Controller
         $customer_data->update();
         return redirect()->back()->with('success', 'Status is changed successfully.');
     }
+    public function delete($id)
+    {
+        $customer = Customer::find($id);
+        if ($customer) {
+            // Hapus file foto 
+            if ($customer->photo && file_exists(public_path('uploads/' . $customer->photo))) {
+                unlink(public_path('uploads/' . $customer->photo));
+            }
+
+            // Hapus data customer
+            $customer->delete();
+
+            return redirect()->route('admin_customer')->with('success', 'Customer deleted successfully.');
+        }
+
+        return redirect()->route('admin_customer')->with('error', 'Customer not found.');
+    }
+
 }
