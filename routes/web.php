@@ -87,6 +87,7 @@ Route::middleware(['auth:customer'])->group(function () {
     // Route untuk melihat pesanan pelanggan
     Route::get('/customer/order/view', [CustomerOrderController::class, 'index'])->name('customer_order_view');
     Route::get('/customer/invoice/{id}', [CustomerOrderController::class, 'invoice'])->name('customer_invoice');
+    Route::post('/customer/upload-payment-proof/{orderId}', [CustomerOrderController::class, 'uploadPaymentProof'])->name('customer_upload_payment_proof');
 
     // Route untuk logout
     Route::get('/customer/logout', [CustomerAuthController::class, 'logout'])->name('customer_logout');

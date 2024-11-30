@@ -383,7 +383,7 @@
         <div class="row">
             <div class="col-md-12">
                 <ul class="d-flex justify-content-center list-unstyled gap-4 footer-links">
-                    <li><a href="{{ route('home') }}" class="footer-link">HOME</a></li>
+                    <li><a href="{{ route('home') }}" class="footer-link">Home</a></li>
                     @if($global_page_data->blog_status == 1)
                     <li><a href="{{ route('blog') }}" class="footer-link">{{ $global_page_data->blog_heading }}</a></li>
                     @endif
@@ -400,7 +400,7 @@
             <!-- Social Links -->
             <div class="col-md-12 text-center">
             <ul class="social d-flex justify-content-center list-unstyled gap-3">
-                    <li><a href="https://www.youtube.com/" class="social-icon text-white bg-danger rounded-circle d-flex align-items-center justify-content-center"><i class="fa fa-facebook-f"></i></a></li>
+                    <li><a href="https://www.facebook.com/" class="social-icon text-white bg-danger rounded-circle d-flex align-items-center justify-content-center"><i class="fa fa-facebook-f"></i></a></li>
                     <li><a href="https://www.twitter.com/" class="social-icon rounded-circle"><i class="fa fa-twitter"></i></a></li>                   
                     <li><a href="https://www.linkedin.com/" class="social-icon rounded-circle"><i class="fa fa-linkedin"></i></a></li>
                     <li><a href="https://www.pinterest.com/" class="social-icon rounded-circle"><i class="fa fa-pinterest-p"></i></a></li>
