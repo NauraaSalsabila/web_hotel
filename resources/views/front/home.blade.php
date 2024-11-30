@@ -11,11 +11,6 @@
                 <p>
                     {!! $item->text !!}
                 </p>
-                @if($item->button_text != '')
-                <div class="button">
-                    <a href="{{ $item->button_url }}">{{ $item->button_text }}</a>
-                </div>
-                @endif
             </div>
         </div>
         @endforeach
