@@ -41,6 +41,12 @@
                                         @else
                                             <a href="{{ route('admin_customer_change_status',$row->id) }}" class="btn btn-danger">Pending</a>
                                         @endif
+
+                                        <form action="{{ route('admin_customer_delete', $row->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this customer?')">Delete</button>
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach
