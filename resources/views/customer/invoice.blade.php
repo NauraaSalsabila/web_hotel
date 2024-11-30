@@ -71,7 +71,7 @@
                                     $diff = ($t2-$t1)/60/60/24;
                                     $sub = $room_data->price*$diff;
                                     @endphp
-                                    Rp{{ $sub }}
+                                    Rp{{ number_format($sub, 0, ',', '.') }}
                                 </td>
                             </tr>
                             @php
@@ -84,7 +84,7 @@
                         <div class="col-lg-12 text-right">
                             <div class="invoice-detail-item">
                                 <div class="invoice-detail-name">Total</div>
-                                <div class="invoice-detail-value invoice-detail-value-lg">Rp{{ $total }}</div>
+                                <div class="invoice-detail-value invoice-detail-value-lg">Rp{{ number_format($total, 0, ',', '.') }}</div>
                             </div>
                         </div>
                     </div>
