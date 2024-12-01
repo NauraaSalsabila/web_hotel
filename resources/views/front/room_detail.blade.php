@@ -11,7 +11,7 @@
         </div>
     </div>
 </div>
-
+<style> </style>
 <div class="page-content room-detail">
     <div class="container">
         <div class="row">
@@ -90,14 +90,14 @@
 
                 <div class="sidebar-container" id="sticky_sidebar">
 
-                    <div class="widget">
+                    <div class="widget" style="border-radius: 10px; border-width: 2px;">
                         <h2>Room Price per Night</h2>
-                        <div class="price">
+                        <div class="price" style="color: #2D6ADC;">
                             Rp{{ number_format($single_room_data->price, 2, ',', '.') }}
                         </div>
 
                     </div>
-                    <div class="widget">
+                    <div class="widget" style="border-radius: 10px; border-width: 1px; color: #000000;">
                         <h2>Reserve This Room</h2>
                         <form action="{{ route('cart_submit') }}" method="post">
                             @csrf

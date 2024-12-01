@@ -3,21 +3,27 @@
 @section('main_content')
 <div class="slider">
     <div class="slide-carousel owl-carousel">
-        @foreach($slide_all as $item)
+        @foreach($slide_all as $index => $item)
         <div class="item" style="background-image:url({{ asset('uploads/'.$item->photo) }});">
             <div class="bg"></div>
             <div class="text">
-                <h2>BEST HOTEL IN BANDAR LAMPUNG</h2>
-                <p>
-                    Dian Punya
-                </p>
+                @if($index == 0) <!-- First slide -->
+                    <h2>BEST HOTEL IN BANDAR LAMPUNG</h2>
+                    <p>Experience unparalleled luxury and world-class service at our premier hotel in Bandar Lampung. Offering a blend of modern amenities and traditional hospitality, we ensure an unforgettable stay for all our guests. Whether you're visiting for business or leisure, our location and facilities cater to all your needs.</p>
+                @elseif($index == 1) <!-- Second slide -->
+                    <h2>QUALITY ROOM FOR THE GUEST</h2>
+                    <p>RRelax and rejuvenate in our meticulously designed rooms, tailored for your comfort. Each room is equipped with top-of-the-line amenities and offers breathtaking views, ensuring a peaceful and restful stay. Whether you're here for a short getaway or an extended visit, our rooms offer the perfect retreat after a long day.</p>
+                @else <!-- For all other slides, you can keep a default text -->
+                    <h2>{{ $item->title }}</h2>
+                    <p>{{ $item->description }}</p>
+                @endif
             </div>
         </div>
         @endforeach
     </div>
 </div>
 
- 
+
 <div class="search-section">
     <div class="container">
         <form action="{{ route('cart_submit') }}" method="post">
@@ -141,7 +147,7 @@
                         </div>
 
                         <div class="button">
-                            <a href="{{ route('room_detail',$item->id) }}" class="btn btn-primary">See Detail</a>
+                            <a href="{{ route('room_detail', $item->id) }}" class="btn btn-primary" style="border-radius: 10px; color: #2D6ADC; border-width: 2px;">See Detail</a>
                         </div>
                     </div>
                 </div>
@@ -150,9 +156,9 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="big-button">
-                    <a href="{{ route('room') }}" class="btn btn-primary">See All Rooms</a>
-                </div>
+            <div class="big-button">
+                <a href="{{ route('room') }}" class="btn btn-primary custom-btn" style="border-radius: 10px;">See All Rooms</a>
+            </div>
             </div>
         </div>
     </div>
