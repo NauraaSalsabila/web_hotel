@@ -27,17 +27,12 @@
         </script>
 
 <style>
-    .navbar-logo {
-    width: 180px; /* Adjust the width */
-    height: 150; /* Maintain aspect ratio */
-}
-
     /* Warna Utama - Biru dan Putih */
     :root {
-        --primary-color: #2D6ADC; /* Biru */
+        --primary-color: #2196F3; /* Biru */
         --secondary-color: #ffffff; /* Putih */
-        --hover-color: #CEFCF5; /* Biru lebih gelap untuk hover */
-        --border-color: #2D6ADC; /* Warna border biru */
+        --hover-color: #0d47a1; /* Biru lebih gelap untuk hover */
+        --border-color: #2196F3; /* Warna border biru */
     }
 
     /* Navigation Hover Effects */
@@ -86,6 +81,15 @@
         border: 2px solid var(--primary-color); /* Menambahkan border biru */
     }
 
+    /* Hover Effect for Footer Links */
+    .footer ul.social li a:hover,
+    .footer input[type="submit"]:hover {
+        background-color: var(--hover-color);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transform: scale(1.1);
+        border-color: var(--hover-color); /* Border berubah saat hover */
+    }
+
     /* Buttons with Hover Effect */
     .slider .text .button a,
     .search-section button[type="submit"],
@@ -96,7 +100,7 @@
         padding: 10px 20px;
         font-weight: bold;
         transition: background-color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
-        border: 1px solid var(--primary-color); /* Menambahkan border biru */
+        border: 2px solid var(--primary-color); /* Menambahkan border biru */
     }
 
     /* Hover Effect for Buttons */
@@ -141,7 +145,7 @@
         background-color: var(--secondary-color)!important;
         transition: background-color 0.3s ease;
         padding: 8px 15px;
-        border-radius: 2px;
+        border-radius: 5px;
         border: 2px solid var(--border-color); /* Menambahkan border biru pada item */
     }
 
@@ -157,6 +161,23 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         border-color: var(--hover-color); /* Border berubah warna saat hover */
     }
+
+    .footer-links a {
+    color: #ffffff; /* Warna tautan putih */
+    text-decoration: none; /* Menghilangkan garis bawah */
+    transition: color 0.3s; /* Efek transisi saat hover */
+}
+
+    .footer-links a:hover {
+        color: #ffc107; /* Warna saat hover */
+    }
+
+    .social-icon {
+        color: #ffffff; /* Warna ikon sosial putih */
+        font-size: 1.5rem; /* Ukuran ikon lebih besar */
+        transition: color 0.3s; /* Efek transisi saat hover */
+    }
+
 
     .footer-message {
         font-style: italic; /* Gaya teks miring untuk pesan */
@@ -297,13 +318,13 @@
 
         <!-- Bagian logo di Desktop Navigation -->
         <div class="main-nav">
-    <div class="container">
-        <nav class="navbar navbar-expand-md navbar-light">
-            <a class="navbar-brand" href="{{ route('home') }}">
-                <img src="/uploads/Logo.png" alt="Logo" class="navbar-logo">
-            </a>
-            <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
+            <div class="container">
+                <nav class="navbar navbar-expand-md navbar-light">
+                    <a class="navbar-brand" href="{{ route('home') }}">
+                        <img src="/uploads/Logo.png" alt="Logo">
+                    </a>
+                    <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto">
                             <!-- Daftar menu -->
 
             
@@ -323,6 +344,10 @@
                                         @endforeach
                                     </ul>
                                 </li>
+
+
+                                
+
 
                                 @if($global_page_data->blog_status == 1)
                                 <li class="nav-item">
