@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->text('name');
             $table->text('description');
-            $table->text('price');
+            $table->decimal('price', 10, 2)->default(0);            
             $table->text('total_rooms');
             $table->text('amenities')->nullable();
             $table->text('size')->nullable();
@@ -26,7 +26,6 @@ return new class extends Migration
             $table->text('total_balconies')->nullable();
             $table->text('total_guests')->nullable();
             $table->text('featured_photo');
-            $table->text('video_id')->nullable();
             $table->timestamps();
         });
     }
