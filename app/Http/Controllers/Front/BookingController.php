@@ -192,7 +192,7 @@ class BookingController extends Controller
     $cents = $final_price * 100;
 
     // Tentukan batas maksimal jumlah yang diterima oleh Stripe untuk IDR
-    $max_amount = 999999999; // Batas maksimal untuk transaksi IDR (9909,999.99 IDR dalam sen)
+    $max_amount = 999999999; // Batas maksimal untuk transaksi IDR  
     if ($cents > $max_amount) {
         $cents = $max_amount;  // Membatasi jumlah ke batas maksimal
     }

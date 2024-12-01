@@ -7,9 +7,9 @@
         <div class="item" style="background-image:url({{ asset('uploads/'.$item->photo) }});">
             <div class="bg"></div>
             <div class="text">
-                <h2>{{ $item->heading }}</h2>
+                <h2>BEST HOTEL IN BANDAR LAMPUNG</h2>
                 <p>
-                    {!! $item->text !!}
+                    Dian Punya
                 </p>
             </div>
         </div>

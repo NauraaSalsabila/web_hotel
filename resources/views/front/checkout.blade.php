@@ -99,7 +99,7 @@
                                 <input type="text" class="form-control mb_15" name="billing_city" value="{{ $billing_city }}">
                             </div>
                             <div class="col-lg-6">
-                                <label for="">Zip Code: *</label>
+                                <label for="">Kode Pos: *</label>
                                 <input type="text" class="form-control mb_15" name="billing_zip" value="{{ $billing_zip }}">
                             </div>
                         </div>

@@ -26,7 +26,6 @@ use App\Http\Controllers\Customer\CustomerProfileController;
 use App\Http\Controllers\Customer\CustomerOrderController;
 
 /* Front */
-Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
 Route::delete('/admin/customer/delete/{id}', [AdminCustomerController::class, 'delete'])->name('admin_customer_delete');
 Route::post('/pay-with-cash', [BookingController::class, 'payWithCash'])->name('pay.with.cash');

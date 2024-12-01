@@ -78,9 +78,11 @@
                                 @endphp
 
                                 <tr>
-                                    <td>
-                                        <a href="{{ route('cart_delete', $room_id) }}" class="cart-delete-link" onclick="return confirm('Are you sure?');"><i class="fa fa-times"></i></a>
-                                    </td>
+                                <td>
+                                    <a href="{{ route('cart_delete', $room_id) }}" class="cart-delete-link" onclick="return confirm('Are you sure?');">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
                                     <td>{{ $i + 1 }}</td>
                                     <td><img src="{{ asset('uploads/'.$room_data->featured_photo) }}"></td>
                                     <td>
@@ -107,7 +109,9 @@
                 </div>
 
                 <div class="checkout mb_20">
-                    <a href="{{ route('checkout') }}" class="btn btn-primary bg-website">Checkout</a>
+                    <a href="{{ route('checkout') }}" class="btn btn-primary bg-website">
+                        <i class="fas fa-shopping-cart"></i> Checkout
+                    </a>
                 </div>
 
                 @else
