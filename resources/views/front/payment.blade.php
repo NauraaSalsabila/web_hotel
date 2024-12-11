@@ -218,17 +218,17 @@
                                                 $t1 = strtotime($d1_new);
                                                 $t2 = strtotime($d2_new);
                                                 $diff = ($t2-$t1)/60/60/24;
-                                                echo 'Rp'.$room_data->price*$diff;
+                                                $total_price = $room_data->price * $diff;
                                             @endphp
+                                            Rp{{ number_format($total_price, 0, ',', '.') }}
                                         </td>
                                     </tr>
                                     @php
-                                    $total_price = $total_price+($room_data->price*$diff);
                                 }
                                 @endphp                                
                                 <tr>
                                     <td><b>Total:</b></td>
-                                    <td class="p_price"><b>Rp{{ $total_price }}</b></td>
+                                    <td>Rp{{ number_format($total_price, 0, ',', '.') }}</td>
                                 </tr>
                             </tbody>
                         </table>

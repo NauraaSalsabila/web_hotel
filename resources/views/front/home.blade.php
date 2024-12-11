@@ -67,7 +67,6 @@
 
 
 
-@if($global_setting_data->home_feature_status == 'Show')
 <div class="home-feature">
     <div class="container">
         <div class="row">
@@ -118,11 +117,8 @@
         </div>
     </div>
 </div>
-@endif
 
 
-
-@if($global_setting_data->home_room_status == 'Show')
 <div class="home-rooms">
     <div class="container">
         <div class="row">
@@ -132,7 +128,7 @@
         </div>
         <div class="row">
             @foreach($room_all as $item)
-            @if($loop->iteration>$global_setting_data->home_room_total) 
+            @if($loop->iteration > 4) <!-- Ubah batasan jumlah tampilan jika diperlukan -->
             @break
             @endif
             <div class="col-md-3">
@@ -163,10 +159,8 @@
         </div>
     </div>
 </div>
-@endif
 
 
-@if($global_setting_data->home_testimonial_status == 'Show')
 <div class="testimonial" style="background-image: url(uploads/slide2.jpg)">
     <div class="bg"></div>
     <div class="container">
@@ -194,7 +188,7 @@
                     </div>
                     <div class="item">
                         <div class="photo">
-                            <img src="{{ asset('uploads/client2.png') }}" alt="Client 2">
+                            <img src="{{ asset('uploads/client2.jpg') }}" alt="Client 2">
                         </div>
                         <div class="text">
                             <h4>Naura Salsabila</h4>
@@ -208,7 +202,7 @@
                     </div>
                     <div class="item">
                         <div class="photo">
-                            <img src="{{ asset('uploads/client3.png') }}" alt="Client 3">
+                            <img src="{{ asset('uploads/client3.jpg') }}" alt="Client 3">
                         </div>
                         <div class="text">
                             <h4>Dian Prinatama Silaban</h4>
@@ -226,10 +220,9 @@
     </div>
 </div>
 
-@endif
 
 
-@if($global_setting_data->home_latest_post_status == 'Show')
+
 <div class="blog-item">
     <div class="container">
         <div class="row">
@@ -240,9 +233,6 @@
         <div class="row">
 
             @foreach($post_all as $item)
-            @if($loop->iteration>$global_setting_data->home_latest_post_total) 
-            @break
-            @endif
             <div class="col-md-4">
                 <div class="inner">
                     <div class="photo">
@@ -262,14 +252,10 @@
                 </div>
             </div>
             @endforeach
-            
+
         </div>
     </div>
 </div>
-@endif
-
-
-
 
 
 @if($errors->any())

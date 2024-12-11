@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <title>Hotel Website</title>        
 		
-        <link rel="icon" type="image/png" href="{{ asset('uploads/'.$global_setting_data->favicon) }}">
+        
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
         @include('front.layout.styles')
@@ -16,15 +16,6 @@
         
 
         <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500&display=swap" rel="stylesheet">
-        
-        <!-- Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id={{ $global_setting_data->analytic_id }}"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '{{ $global_setting_data->analytic_id }}');
-        </script>
 
 <style>
     /* Warna Utama - Biru dan Putih */
