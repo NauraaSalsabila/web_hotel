@@ -232,6 +232,15 @@
 
     </head>
     <body>
+        @php
+    $cart_status = 1; // Gantilah dengan 1 atau 0 sesuai kebutuhan
+    $checkout_status = 1; // Gantilah dengan 1 atau 0 sesuai kebutuhan
+    $signup_status = 1; // Gantilah dengan 1 atau 0 sesuai kebutuhan
+    $signin_status = 1; // Gantilah dengan 1 atau 0 sesuai kebutuhan
+    $blog_status = 1; // Gantilah dengan 1 atau 0 sesuai kebutuhan
+    $contact_status = 1; // Gantilah dengan 1 atau 0 sesuai kebutuhan
+    @endphp
+
         
         <div class="top">
             <div class="container">
@@ -247,24 +256,25 @@
                     <div class="col-md-6 right-side">
                         <ul class="right">
 
-                            @if($global_page_data->cart_status == 1)
-                            <li class="menu"><a href="{{ route('cart') }}">{{ $global_page_data->cart_heading }} @if(session()->has('cart_room_id'))<sup>{{ count(session()->get('cart_room_id')) }}</sup>@endif</a></li>
+                            @if($cart_status == 1)
+                            <li class="menu"><a href="{{ route('cart') }}">{{ 'Cart' }} @if(session()->has('cart_room_id'))<sup>{{ count(session()->get('cart_room_id')) }}</sup>@endif</a></li>
                             @endif
 
-                            @if($global_page_data->checkout_status == 1)
-                            <li class="menu"><a href="{{ route('checkout') }}">{{ $global_page_data->checkout_heading }}</a></li>
+                            @if($checkout_status == 1)
+                            <li class="menu"><a href="{{ route('checkout') }}">{{ 'Checkout' }}</a></li>
                             @endif
 
 
                             @if(!Auth::guard('customer')->check())
+                            @if($signup_status == 1)
+                            <li class="menu"><a href="{{ route('customer_signup') }}">{{ 'Sign Up' }}</a></li>
+                             @endif
 
-                                @if($global_page_data->signup_status == 1)
-                                <li class="menu"><a href="{{ route('customer_signup') }}">{{ $global_page_data->signup_heading }}</a></li>
-                                @endif
 
-                                @if($global_page_data->signin_status == 1)
-                                <li class="menu"><a href="{{ route('customer_login') }}">{{ $global_page_data->signin_heading }}</a></li>
-                                @endif
+
+                            @if($signin_status == 1)
+                            <li class="menu"><a href="{{ route('customer_login') }}">{{ 'Sign In' }}</a></li>
+                             @endif
 
                             @else   
 
@@ -340,15 +350,15 @@
                                 
 
 
-                                @if($global_page_data->blog_status == 1)
+                                @if($blog_status == 1)
                                 <li class="nav-item">
-                                    <a href="{{ route('blog') }}" class="nav-link">{{ $global_page_data->blog_heading }}</a>
+                                <a href="{{ route('blog') }}" class="nav-link">{{ 'Blog' }}</a>
                                 </li>
                                 @endif
 
-                                @if($global_page_data->contact_status == 1)
+                                @if($contact_status == 1)
                                 <li class="nav-item">
-                                    <a href="{{ route('contact') }}" class="nav-link">{{ $global_page_data->contact_heading }}</a>
+                                    <a href="{{ route('contact') }}" class="nav-link">{{ 'Contact' }}</a>
                                 </li>
                                 @endif
 
@@ -370,12 +380,13 @@
             <div class="col-md-12">
                 <ul class="d-flex justify-content-center list-unstyled gap-4 footer-links">
                     <li><a href="{{ route('home') }}" class="footer-link">Home</a></li>
-                    @if($global_page_data->blog_status == 1)
-                    <li><a href="{{ route('blog') }}" class="footer-link">{{ $global_page_data->blog_heading }}</a></li>
-                    @endif
-                    @if($global_page_data->contact_status == 1)
-                    <li><a href="{{ route('contact') }}" class="footer-link">{{ $global_page_data->contact_heading }}</a></li>
-                    @endif
+                    @if(optional($global_page_data)->blog_status == 1)
+                    <li class="menu"><a href="{{ route('blog') }}">{{ optional($global_page_data)->blog_heading }}</a></li>
+                @endif
+                @if(optional($global_page_data)->contact_status == 1)
+                <li><a href="{{ route('contact') }}" class="footer-link">{{ optional($global_page_data)->contact_heading }}</a></li>
+                 @endif
+            
                 </ul>
                 <hr class="footer-divider">
             </div>

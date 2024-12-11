@@ -188,7 +188,7 @@
                     </div>
                     <div class="item">
                         <div class="photo">
-                            <img src="{{ asset('uploads/client2.jpg') }}" alt="Client 2">
+                            <img src="{{ asset('uploads/client2.png') }}" alt="Client 2">
                         </div>
                         <div class="text">
                             <h4>Naura Salsabila</h4>
@@ -202,7 +202,7 @@
                     </div>
                     <div class="item">
                         <div class="photo">
-                            <img src="{{ asset('uploads/client3.jpg') }}" alt="Client 3">
+                            <img src="{{ asset('uploads/client3.png') }}" alt="Client 3">
                         </div>
                         <div class="text">
                             <h4>Dian Prinatama Silaban</h4>
