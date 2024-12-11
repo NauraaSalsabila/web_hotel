@@ -3,23 +3,23 @@
 @section('main_content')
 <div class="slider">
     <div class="slide-carousel owl-carousel">
-        @foreach($slide_all as $index => $item)
-        <div class="item" style="background-image:url({{ asset('uploads/'.$item->photo) }});">
+        <!-- First Slide -->
+        <div class="item" style="background-image:url({{ asset('uploads/slide1.jpg') }});">
             <div class="bg"></div>
             <div class="text">
-                @if($index == 0) <!-- First slide -->
-                    <h2>BEST HOTEL IN BANDAR LAMPUNG</h2>
-                    <p>Experience unparalleled luxury and world-class service at our premier hotel in Bandar Lampung. Offering a blend of modern amenities and traditional hospitality, we ensure an unforgettable stay for all our guests. Whether you're visiting for business or leisure, our location and facilities cater to all your needs.</p>
-                @elseif($index == 1) <!-- Second slide -->
-                    <h2>QUALITY ROOM FOR THE GUEST</h2>
-                    <p>RRelax and rejuvenate in our meticulously designed rooms, tailored for your comfort. Each room is equipped with top-of-the-line amenities and offers breathtaking views, ensuring a peaceful and restful stay. Whether you're here for a short getaway or an extended visit, our rooms offer the perfect retreat after a long day.</p>
-                @else <!-- For all other slides, you can keep a default text -->
-                    <h2>{{ $item->title }}</h2>
-                    <p>{{ $item->description }}</p>
-                @endif
+                <h2>BEST HOTEL IN BANDAR LAMPUNG</h2>
+                <p>Experience unparalleled luxury and world-class service at our premier hotel in Bandar Lampung. Offering a blend of modern amenities and traditional hospitality, we ensure an unforgettable stay for all our guests. Whether you're visiting for business or leisure, our location and facilities cater to all your needs.</p>
             </div>
         </div>
-        @endforeach
+
+        <!-- Second Slide -->
+        <div class="item" style="background-image:url({{ asset('uploads/slide2.jpg') }});">
+            <div class="bg"></div>
+            <div class="text">
+                <h2>QUALITY ROOM FOR THE GUEST</h2>
+                <p>Relax and rejuvenate in our meticulously designed rooms, tailored for your comfort. Each room is equipped with top-of-the-line amenities and offers breathtaking views, ensuring a peaceful and restful stay. Whether you're here for a short getaway or an extended visit, our rooms offer the perfect retreat after a long day.</p>
+            </div>
+        </div>
     </div>
 </div>
 
