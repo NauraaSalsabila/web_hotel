@@ -196,7 +196,7 @@
                         </div>
                         <div class="description">
                             <p>
-                             "The experience was outstanding. Highly recommended for those seeking quality and reliability."
+                             "The experience was outstanding. Highly recommended for those seeking quality & reliability."
                             </p>
                         </div>
                     </div>
