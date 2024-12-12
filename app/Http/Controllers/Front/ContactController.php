@@ -12,8 +12,7 @@ class ContactController extends Controller
 {
     public function index()
     {
-        $page_data = Page::where('id',1)->first();
-        return view('front.contact', compact('page_data'));
+        return view('front.contact');
     }
 
     public function send_email(Request $request)
@@ -27,7 +26,7 @@ class ContactController extends Controller
         if(!$validator->passes()) {
             return response()->json(['code'=>0,'error_message'=>$validator->errors()->toArray()]);
         } else {
-            
+
             // Send email
             $subject = 'Contact form email';
             $message = 'Visitor email information: <br>';
